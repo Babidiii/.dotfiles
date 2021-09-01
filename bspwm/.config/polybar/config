@@ -27,8 +27,9 @@ primary = #ffb52a
 secondary = #e60053
 alert = #bd2c40
 
-[bar/example]
-;monitor = ${env:MONITOR:HDMI-1}
+[bar/babidiiiBar]
+; monitor = ${env:MONITOR:HDMI-1}
+monitor = ${env:MONITOR:}
 width = 100%
 height = 27
 ;offset-x = 1%
@@ -78,6 +79,47 @@ tray-padding = 2
 
 cursor-click = pointer
 cursor-scroll = ns-resize
+
+
+
+[bar/extBabidiiiBar]
+; monitor = ${env:MONITOR:HDMI-1}
+monitor = ${env:MONITOR:HDMI-1-0}
+width = 20%
+height = 27
+offset-x = 40%
+; offset-y = 0%
+radius = 6.0
+; fixed-center = true
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+line-size = 3
+line-color = #f00
+
+border-size = 4
+border-color = #00000000
+
+padding-left = 0
+padding-right = 2
+
+module-margin-left = 1
+module-margin-right = 2
+
+font-0 = fixed:pixelsize=10;1
+font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
+font-2 = JoyPixels:scale=10;2
+
+modules-center = bspwm
+
+tray-position = right
+tray-padding = 2
+
+cursor-click = pointer
+cursor-scroll = ns-resize
+
+
 
 [module/xwindow]
 type = internal/xwindow
@@ -229,17 +271,17 @@ format-connected = <ramp-signal> <label-connected>
 format-connected-underline = #9f78e1
 label-connected = %essid%
 
-format-disconnected =
-;format-disconnected = <label-disconnected>
+format-disconnected = <label-disconnected>
 ;format-disconnected-underline = ${self.format-connected-underline}
-;label-disconnected = %ifname% disconnected
-;label-disconnected-foreground = ${colors.foreground-alt}
+label-disconnected = %ifname% disconnected
+label-disconnected-foreground = ${colors.foreground-alt}
 
-ramp-signal-0 = 📶
-ramp-signal-1 = 📶
-ramp-signal-2 = 📶
-ramp-signal-3 = 📶
-ramp-signal-4 = 📶
+ramp-signal-0 = 😱
+ramp-signal-1 = 😠
+ramp-signal-2 = 😒
+ramp-signal-3 = 😊
+ramp-signal-4 = 😃
+ramp-signal-5 = 😈
 ramp-signal-foreground = ${colors.foreground-alt}
 
 [module/eth]
