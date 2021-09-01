@@ -2,13 +2,12 @@
 # wm independent hotkeys
 #
 
-
 # terminal emulator
 super + Return
 	st
 
 # program launcher
-super + @space
+super + @p
 	dmenu_run
 
 # make sxhkd reload its configuration files:

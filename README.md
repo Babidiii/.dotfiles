@@ -1,5 +1,16 @@
+<p align="center">
+<img src="images/babidiii-dotfiles-logo.png" alt="Babidiii dotfile logo" title="logo" />
+</p>
+
 # .dotfiles
 
-- vim  
-  [Move vim conf file to .config](https://vi.stackexchange.com/questions/11879/how-can-put-vimrc-and-viminfo-into-vim-directory )
-- 
+
+- vim/nvim
+- tmux
+- polybar
+- bspwm
+- dwm
+- dmenu
+- readline
+- dunst
+- sxiv
