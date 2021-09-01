@@ -2,9 +2,9 @@
 
 pgrep -x sxhkd > /dev/null || sxhkd &
 
-if [[ $(xrandr -q | grep 'HDMI-1-0 connected') ]]; then
-  xrandr --output eDP1 --primary --mode 1920x1080 --pos 0x0 --rotate normal --output VIRTUAL1 --off --output HDMI-1-0 --mode 1920x1080 --pos 1920x0 --rotate normal
-fi
+# if [[ $(xrandr -q | grep 'HDMI-1-0 connected') ]]; then
+#   xrandr --output eDP1 --primary --mode 1920x1080 --pos 0x0 --rotate normal --output VIRTUAL1 --off --output HDMI-1-0 --mode 1920x1080 --pos 1920x0 --rotate normal
+# fi
 
 bspc monitor eDP1 -d 1 2 3 4 5 6 7 8 9 10
 bspc monitor HDMI-1-0 -d A B C D E F G H I J
@@ -12,7 +12,11 @@ bspc monitor HDMI-1-0 -d A B C D E F G H I J
 $HOME/.config/polybar/launch.sh
 
 bspc config border_width         2
-bspc config window_gap           9
+bspc config window_gap           5
+bspc config top_padding          0
+bspc config bottom_padding       0
+bspc config remove_disabled_monitors true
+bspc config remove_unplugged_monitors true
 
 bspc config split_ratio          0.52
 bspc config borderless_monocle   true
@@ -21,6 +25,4 @@ bspc config gapless_monocle      true
 # xprop | grep WM_CLASS
 bspc rule -a Gimp desktop='^8' state=floating follow=on
 bspc rule -a Brave-browser desktop='^10'
-bspc rule -a mplayer2 state=floating
-bspc rule -a Kupfer.py focus=on
 bspc rule -a Screenkey manage=off
