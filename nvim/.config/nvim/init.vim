@@ -71,11 +71,9 @@ Plug 'unblevable/quick-scope'
 Plug 'junegunn/vim-easy-align'
 
 """ File sharing
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
 " Plug 'nvim-lua/popup.nvim'
-" Plug 'nvim-lua/plenary.nvim'
-" Plug 'nvim-telescope/telescope.nvim'
 
 " Fun
 Plug 'mhinz/vim-startify'
@@ -229,24 +227,17 @@ let g:vimtex_view_method='zathura'
 set conceallevel=1
 let g:vimwiki_text_ignore_newline=0   "Newlines in a list item are converted to <br />s.
 
-
-
 " ----------------------------------------------------------------------------
-"  - FZF
+"  - Telescope
 " ----------------------------------------------------------------------------
-" let g:fzf_layout = {'up':'~90%', 'window': { 'width': 0.8, 'height': 0.8,'yoffset':0.5,'xoffset': 0.5, 'highlight': 'Todo', 'border': 'sharp' } }
-" This is the default extra key bindings
-let g:fzf_action = {
-			\ 'ctrl-t': 'tab split',
-			\ 'ctrl-x': 'split',
-			\ 'ctrl-v': 'vsplit' }
-
-map <expr> <C-f> (len(system('git rev-parse')) ? ':Files' : ':GFiles --exclude-standard --others --cached')."\<CR>"
-map <leader>b :Buffers<CR>
-nnoremap <leader>g :Rg<CR>
-nnoremap <leader>t :Tags<CR>
-nnoremap <leader>m :Marks<CR>
-
+" Find files using Telescope command-line sugar.
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <leader>fb <cmd>Telescope buffers<cr>
+nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+nnoremap <leader>fl <cmd>Telescope loclist<cr>
+nnoremap <leader>fc <cmd>Telescope quickfix<cr>
+nnoremap <leader>fu <cmd>Telescope git_files<cr>
 
 " ----------------------------------------------------------------------------
 "  - Startify

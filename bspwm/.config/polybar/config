@@ -85,9 +85,9 @@ cursor-scroll = ns-resize
 [bar/extBabidiiiBar]
 ; monitor = ${env:MONITOR:HDMI-1}
 monitor = ${env:MONITOR:HDMI-1-0}
-width = 20%
+width = 26%
 height = 27
-offset-x = 40%
+offset-x = 37%
 ; offset-y = 0%
 radius = 6.0
 ; fixed-center = true
@@ -111,7 +111,7 @@ font-0 = fixed:pixelsize=10;1
 font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
 font-2 = JoyPixels:scale=10;2
 
-modules-center = bspwm
+modules-center = wlan bspwm date
 
 tray-position = right
 tray-padding = 2
