@@ -56,6 +56,7 @@ Plug 'flazz/vim-colorschemes'
 Plug 'fatih/vim-go'  " Golang feature
 Plug 'mxw/vim-jsx'
 Plug 'pangloss/vim-javascript'
+Plug 'rust-lang/rust.vim'
 
 """ LSP Configuration
 Plug 'neovim/nvim-lspconfig'
@@ -167,6 +168,9 @@ nnoremap <leader>k :m .-2<CR>==
 " -----------------------------------------------------------------------------
 :command! W w
 
+" Rust
+let g:rustfmt_autosave = 1
+" let g:rustfmt_fail_silently = 1
 
 " ----------------------------------------------------------------------------
 "  - Fugitive
@@ -353,3 +357,6 @@ inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 set completeopt=menuone,noinsert,noselect
 let g:completion_matching_strategy_list = [ 'exact', 'substring', 'fuzzy' ]
 set shortmess+=c
+
+
+
