@@ -7,7 +7,7 @@ pgrep -x sxhkd > /dev/null || sxhkd &
 # fi
 
 bspc monitor eDP1 -d 1 2 3 4 5 6 7 8 9 10
-bspc monitor HDMI-1-0 -d A B C D E F G H I J
+bspc monitor HDMI-1-0 -d 1 2 3 4 5 6 7 8 9 10
 
 $HOME/.config/polybar/launch.sh
 
@@ -23,6 +23,6 @@ bspc config borderless_monocle   true
 bspc config gapless_monocle      true
 
 # xprop | grep WM_CLASS
-bspc rule -a Gimp desktop='^8' state=floating follow=on
-bspc rule -a Brave-browser desktop='^10'
-bspc rule -a Screenkey manage=off
+bspc rule -a Gimp desktop='^8' monitor=focused state=floating follow=on
+bspc rule -a Brave-browser monitor=focused desktop='^10'
+bspc rule -a Screenkey manage=off monitor=focused

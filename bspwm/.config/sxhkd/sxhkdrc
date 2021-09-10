@@ -34,20 +34,27 @@ super + m
 super + y
 	bspc node newest.marked.local -n newest.!automatic.local
 
+
 # swap the current node and the biggest window
 super + g
 	bspc node -s biggest.window
 
 
 #
-# Volume
+# Utils
 #
+
+# Volume mute
 XF86AudioMute
 	amixer sset Master toggle
 
+# Volume low/up
 XF86Audio{Raise,Lower}Volume
 	amixer sset Master 10%{+,-}
 
+# screenshot configuration 
+{shift + ,_} Print
+	scrot {--select,_} '%F_%H-%M-%S_$wx$h.png' -e 'mv $f ~/Pictures/screenshots/ && notify-send -i "~/Pictures/screenshots/$f" "Screenshot captured"'
 
 
 #
@@ -95,6 +102,7 @@ super + {o,i}
 # focus or send to the given desktop
 super + {_,shift + }{1-9,0}
 	bspc {desktop -f,node -d} '^{1-9,10}'
+
 
 #
 # preselect

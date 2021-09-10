@@ -69,4 +69,3 @@ export PATH="$HOME/neovim/bin:$PATH"
 alias cpwd="pwd | xclip -sel clip"
 # alias vim="nvim"
 
-

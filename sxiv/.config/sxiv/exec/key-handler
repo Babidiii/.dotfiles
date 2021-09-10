@@ -32,9 +32,7 @@ case "$1" in
   "C-comma")  rotate 270 ;;
   "C-period") rotate  90 ;;
   "C-slash")  rotate 180 ;;
-  "C-d")
-    [ $(echo -e "No\nYes" | dmenu -p "Delete ?") = "Yes" ] && while read file; do rm "$file"; done ;;
-  "C-w")
-    read file && setbg "$file" ;;
+  "C-d") [ $(echo -e "Yes\nNo" | dmenu -p "Delete ?") = "Yes" ] && while read file; do rm "$file"; done ;;
+  "C-s") read file && setbg "$file" ;;
 esac
 
