@@ -27,6 +27,10 @@ set signcolumn=yes
 set termguicolors
 set guicursor=
 
+" rust
+packadd termdebug
+let g:termdebugger="rust-gdb"
+
 " ----------------------------------------------------------------------------
 "  - Languages
 " ----------------------------------------------------------------------------
@@ -171,6 +175,13 @@ nnoremap <leader>k :m .-2<CR>==
 " Rust
 let g:rustfmt_autosave = 1
 " let g:rustfmt_fail_silently = 1
+
+" ----------------------------------------------------------------------------
+"  - Rust
+" ----------------------------------------------------------------------------
+nnoremap <leader>cc :!cargo clippy
+nnoremap <leader>cr :!cargo run
+
 
 " ----------------------------------------------------------------------------
 "  - Fugitive

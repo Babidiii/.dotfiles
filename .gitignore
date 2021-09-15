@@ -1,0 +1,7 @@
+**/*.db
+**/*.log
+**/*.pid
+**/mpdstate
+**/*.sql
+**/playlists
+
