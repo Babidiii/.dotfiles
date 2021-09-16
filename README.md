@@ -63,6 +63,6 @@ second monitor:
 
 Demo for wallpaper and croc shortcut: 
 
-![sxiv-demo](demos/sxiv.gif)  
+![sxiv-demo](demo/sxiv.gif)  
 
 </details>
