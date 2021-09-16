@@ -4,13 +4,19 @@
 
 # .dotfiles
 
+*screenshots with pfetch, ncmpcpp and ranger*  
+![main-monitor](images/screenshot-2.png)  
+![second-monitor](images/screenshot-1.png)  
 
-- vim/nvim
+
+Configuration are available for: 
+
+- ~~vim~~/nvim
 - tmux
 - polybar
 - bspwm
 - dwm
-- dmenu
+- ~~dmenu~~
 - readline
 - dunst
 - sxiv
