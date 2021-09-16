@@ -12,6 +12,29 @@
 # where C/M/S indicate Ctrl/Meta(Alt)/Shift modifier states and KEY is the X
 # keysym as listed in /usr/include/X11/keysymdef.h without the "XK_" prefix.
 
+
+asking() {
+result=$(whiptail --inputbox "${1}" 8 39 --title "${2}" 3>&1 1>&2 2>&3)
+                                                                        # A trick to swap stdout and stderr.
+# Again, you can pack this inside if, but it seems really long for some 80-col terminal users.
+if [ $? = 0 ]; then
+    echo "${result}"
+    exit 0
+fi
+exit 1
+}
+
+
+send_croc() {
+  res=$(asking "Croc code ?" "Sending file via croc")
+  if [ $? = 0 ]; then
+    bspwmfloat st -e "croc send --code ${res} $1 "
+  else
+    bspwmfloat st -e "croc send $1"
+  fi
+}
+
+
 rotate() {
   degree="$1"
   tr '\n' '\0' | xargs -0 realpath | sort | uniq | while read file; do
@@ -25,10 +48,9 @@ done
 case "$1" in
   "C-x")      xclip -in -filter | tr '\n' ' ' | xclip -in -selection clipboard ;;
   "C-c")      while read file; do xclip -selection clipboard -target image/png "$file"; done ;;
-  "C-e")      while read file; do st -title "$file" -e sh -c "exiv2 pr -q -pa '$file' | less" & done ;;
   "C-g")      tr '\n' '\0' | xargs -0 gimp & ;;
   "C-r")      while read file; do rawtherapee "$file" & done ;;
-  "C-k")      while read file; do croc send "$file" & done ;;
+  "C-k")      while read file; do send_croc "$file" & done ;;
   "C-comma")  rotate 270 ;;
   "C-period") rotate  90 ;;
   "C-slash")  rotate 180 ;;

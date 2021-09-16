@@ -56,6 +56,8 @@ XF86Audio{Raise,Lower}Volume
 {shift + ,_} Print
 	scrot {--select,_} '%F_%H-%M-%S_$wx$h.png' -e 'mv $f ~/Pictures/screenshots/ && notify-send -i "~/Pictures/screenshots/$f" "Screenshot captured"'
 
+super + b
+  polybar-msg cmd toggle
 
 #
 # state/flags

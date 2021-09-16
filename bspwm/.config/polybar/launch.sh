@@ -12,6 +12,7 @@ killall -q polybar
 #   done
 # else
 polybar babidiiiBar 2>&1 | tee -a /tmp/polybar.log & disown
+
 polybar extBabidiiiBar 2>&1 | tee -a /tmp/polybar-ext.log & disown
 # fi
 

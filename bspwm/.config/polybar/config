@@ -28,6 +28,7 @@ secondary = #e60053
 alert = #bd2c40
 
 [bar/babidiiiBar]
+enable-ipc = true
 ; monitor = ${env:MONITOR:HDMI-1}
 monitor = ${env:MONITOR:}
 width = 100%
@@ -83,6 +84,7 @@ cursor-scroll = ns-resize
 
 
 [bar/extBabidiiiBar]
+enable-ipc = true
 ; monitor = ${env:MONITOR:HDMI-1}
 monitor = ${env:MONITOR:HDMI-1-0}
 width = 26%

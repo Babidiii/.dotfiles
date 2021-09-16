@@ -37,6 +37,32 @@
 <summary>Polybar</summary>
 <br>
 
+main monitor:  
 ![polybar-screenshot-main](images/polybar-main.png)  
-![polybar-screenshot-second](images/polybar-main.png)  
+second monitor:  
+![polybar-screenshot-second](images/polybar-second.png)  
+</details>
+
+
+<details open>
+<summary>sxiv</summary>
+<br>
+
+| key bindings | description                      | Require             |
+|--------------|----------------------------------|---------------------|
+| `C-x`        | copy filename into the clipboard | `xclip`             |
+| `C-c`        | Copy image into the clipboard    | `xclip`             |
+| `C-g`        | Open into gimp                   | `st, exiv2`         |
+| `C-comma`    | Rotate 270                       | `jpegtran, mogrify` |
+| `C-period`   | Rotate 90                        | `jpegtran, mogrify` |
+| `C-slash`    | Rotate 180                       | `jpegtran, mogrify` |
+| `C-k`        | Send the file using croc         | `croc, whiptail`    |
+| `C-d`        | Dmenu popup for deletion         | `dmenu`             |
+| `C-s`        | Set as background                | `setbg`             |
+
+
+Demo for wallpaper and croc shortcut: 
+
+![sxiv-demo](demos/sxiv.gif)  
+
 </details>
