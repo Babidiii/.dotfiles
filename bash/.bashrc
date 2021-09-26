@@ -67,5 +67,6 @@ export PATH=$PATH:/usr/local/go/bin       # Golang path
 export PATH="$HOME/neovim/bin:$PATH"
 
 alias cpwd="pwd | xclip -sel clip"
-# alias vim="nvim"
+alias vim="nvim"
+export EDITOR="nvim"
 

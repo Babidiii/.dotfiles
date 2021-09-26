@@ -1,0 +1,24 @@
+#!/usr/bin/env sh
+
+#-------- keyboard 
+setxkbmap -layout fr -variant us 
+# setxkbmap -layout fr -variant us-azerty 
+setxkbmap -option caps:escape # capslock -> escp for vim
+
+#-------- notification 
+dunst & 
+
+#-------- compositor
+picom --no-fading-openclose --backend glx &
+
+#-------- Wallpaper/themes
+setbg ~/Pictures/wallpaper/away_in_silence_by_aenami_dd9hkf3.png
+wal --theme sexy-derp
+
+#-------- other 
+# dwmblocks &
+# dwmbar &
+
+#-------- tiling window manager
+exec bspwm
+# exec dwm
