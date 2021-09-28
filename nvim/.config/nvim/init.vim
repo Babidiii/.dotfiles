@@ -66,6 +66,10 @@ Plug 'rust-lang/rust.vim'
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/completion-nvim'
 
+""" Tree-sitter experimental --> nv0.6
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-treesitter/playground'
+
 """ Utils
 Plug 'tpope/vim-surround'      " parentheses,brackets...
 Plug 'tpope/vim-commentary' 
@@ -85,6 +89,9 @@ Plug 'mhinz/vim-startify'
 Plug 'junegunn/goyo.vim'
 Plug 'vuciv/vim-bujo'
 call plug#end()
+
+
+lua require'nvim-treesitter.configs'.setup {highlight = { enable = true }}
 
 lua require'colorizer'.setup()
 
