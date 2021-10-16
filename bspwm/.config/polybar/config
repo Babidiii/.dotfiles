@@ -17,25 +17,23 @@
 ;==========================================================
 
 [colors]
-;background = ${xrdb:color0:#222}
-background = #222
-background-alt = #444
-;foreground = ${xrdb:color7:#222}
-foreground = #dfdfdf
-foreground-alt = #555
-primary = #ffb52a
+background = ${xrdb:color0:#222}
+background-alt =  ${xrdb:color5:#444}
+foreground = ${xrdb:color7:#222}
+foreground-alt = ${xrdb:color8:#555}
+
+primary = ${xrdb:color1:#222}
 secondary = #e60053
 alert = #bd2c40
 
 [bar/babidiiiBar]
 enable-ipc = true
-; monitor = ${env:MONITOR:HDMI-1}
 monitor = ${env:MONITOR:}
 width = 100%
 height = 27
 ;offset-x = 1%
 ;offset-y = 1%
-radius = 6.0
+radius = 0
 fixed-center = false
 
 background = ${colors.background}
@@ -44,13 +42,13 @@ foreground = ${colors.foreground}
 line-size = 3
 line-color = #f00
 
-border-size = 4
+border-size = 0
 border-color = #00000000
 
 padding-left = 0
 padding-right = 2
 
-module-margin-left = 1
+module-margin-left = 0
 module-margin-right = 2
 
 ; font-0 = IBM Plex Mono:pixelsize=10;1
@@ -60,14 +58,14 @@ font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
 font-2 = JoyPixels:scale=10;2
 
 modules-left = bspwm
-modules-center = mpd xwindow
+modules-center = xwindow
 modules-right = filesystem xbacklight alsa xkeyboard memory cpu wlan eth battery temperature date powermenu
 
 tray-position = right
 tray-padding = 2
 ;tray-background = #0063ff
 
-; wm-restack = bspwm
+wm-restack = bspwm
 ;wm-restack = i3
 
 ;override-redirect = true
@@ -85,7 +83,6 @@ cursor-scroll = ns-resize
 
 [bar/extBabidiiiBar]
 enable-ipc = true
-; monitor = ${env:MONITOR:HDMI-1}
 monitor = ${env:MONITOR:HDMI-1-0}
 width = 26%
 height = 27
@@ -465,6 +462,6 @@ screenchange-reload = true
 
 [global/wm]
 margin-top = 0
-margin-bottom = 0
+margin-bottom = 3
 
 ; vim:ft=dosini
