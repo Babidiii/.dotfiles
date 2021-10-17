@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+
+DMENU='dmenu -b -i -nb '#040404' -nf '#525252' -sf '#ffa0ff' -sb '#000000' -p Music:'
+NL='nl -s | --number-format=rz --number-width=2'
+
+mpc play $(mpc playlist | ${NL} | ${DMENU} | cut -d '|' -f 1)
