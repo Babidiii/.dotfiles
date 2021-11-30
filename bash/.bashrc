@@ -49,8 +49,8 @@ alias gdb="gdb -nh -x "$XDG_CONFIG_HOME"/gdb/init"
 #---- Inputrc -> ~/.inputrc for readline
 export INPUTRC="$XDG_CONFIG_HOME"/readline/inputrc
 #---- wget (.wgetrc, .wget-hsts)
-export WGETRC="$XDG_CONFIG_HOME/wgetrc"
-alias wget='wget --hsts-file="$XDG_CACHE_HOME/wget-hsts"'
+# export WGETRC="$XDG_CONFIG_HOME/wgetrc"
+# alias wget='wget --hsts-file="$XDG_CACHE_HOME/wget-hsts"'
 #---- Rust (rustup, cargo)
 export RUSTUP_HOME="$XDG_DATA_HOME"/rustup    # rustup
 export CARGO_HOME="$XDG_DATA_HOME"/cargo      # cargo
@@ -63,8 +63,18 @@ export PATH=$PATH:/usr/local/go/bin       # Golang path
 #-------------------
 
 
+
+#------------------- MAN 
+export LESS_TERMCAP_mb=$'\e[1;32m'
+export LESS_TERMCAP_md=$'\e[1;32m'
+export LESS_TERMCAP_me=$'\e[0m'
+export LESS_TERMCAP_se=$'\e[0m'
+export LESS_TERMCAP_so=$'\e[01;33m'
+export LESS_TERMCAP_ue=$'\e[0m'
+export LESS_TERMCAP_us=$'\e[1;4;31m'
+
 # For neovim nightly dev folder
-export PATH="$HOME/neovim/bin:$PATH"
+export PATH="$PATH:$HOME/.dotfiles/scripts"
 
 alias cpwd="pwd | xclip -sel clip"
 alias vim="nvim"
