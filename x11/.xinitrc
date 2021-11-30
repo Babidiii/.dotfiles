@@ -14,6 +14,7 @@ picom --no-fading-openclose --backend glx &
 #-------- Wallpaper/themes
 setbg ~/Pictures/wallpaper/away_in_silence_by_aenami_dd9hkf3.png
 wal --theme sexy-derp
+# wal --theme 3024.json
 
 #-------- other 
 # dwmblocks &
