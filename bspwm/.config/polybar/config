@@ -14,6 +14,10 @@
 include-file = ~/.config/polybar/modules.ini
 include-file = ~/.config/polybar/bars.ini
 
+[values]
+github= "https://github.com/Babidiii"
+gitlab= "https://gitlab.com/Babidiii"
+
 [colors]
 background = ${xrdb:color0:#222}
 background-alt =  ${xrdb:color5:#444}
