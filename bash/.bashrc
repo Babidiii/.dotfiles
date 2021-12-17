@@ -60,6 +60,9 @@ export PATH=$XDG_DATA_HOME/cargo/bin:$PATH    # update path to fit new dir
 export GOPATH="$XDG_DATA_HOME/go"
 export PATH=$PATH:$XDG_DATA_HOME/go/bin   # Golang local path
 export PATH=$PATH:/usr/local/go/bin       # Golang path
+#---- AWS
+export AWS_SHARED_CREDENTIALS_FILE="$XDG_CONFIG_HOME"/aws/credentials
+export AWS_CONFIG_FILE="$XDG_CONFIG_HOME"/aws/config
 #-------------------
 
 

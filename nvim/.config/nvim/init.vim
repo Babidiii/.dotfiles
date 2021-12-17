@@ -207,7 +207,7 @@ nmap <leader>gf :diffget //2<CR>
 " ----------------------------------------------------------------------------
 "  - Terminal
 " ----------------------------------------------------------------------------
-tnoremap <Esc> <C-\><C-n>
+tnoremap <Esc><Esc> <C-\><C-n>
 
 " Terminal mode:
 tnoremap <M-h> <c-\><c-n><c-w>h
@@ -404,7 +404,7 @@ nnoremap <leader>vwa :lua vim.lsp.buf.add_workspace_folder()<CR>
 nnoremap <leader>vwr :lua vim.lsp.buf.remove_workspace_folder()<CR>
 nnoremap <leader>vwl :lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>
 " diagnostic
-nnoremap <leader>ve  :lua vim.lsp.diagnostic.show_line_diagnostics()<CR>
+nnoremap <leader>ve  :lua vim.lsp.diagnostic.show_line_diagnostics({ border = "rounded" })<CR>
 nnoremap <leader>vn :lua vim.lsp.diagnostic.goto_prev()<CR>
 nnoremap <leader>vp :lua vim.lsp.diagnostic.goto_next()<CR>
 nnoremap <leader>vq  :lua vim.lsp.diagnostic.set_loclist()<CR>
@@ -502,7 +502,13 @@ set shortmess+=c
 "  - Harpoon
 " ----------------------------------------------------------------------------
 "Shortcut for commands
-nnoremap <M-9> :lua require("harpoon.term").sendCommand(1, 1)<CR> <bar> :lua require("harpoon.term").gotoTerminal(1)<CR>i<CR>
+nnoremap <M-1> :lua require("harpoon.term").sendCommand(1, 1)<CR> <bar> :lua require("harpoon.term").gotoTerminal(1)<CR>i<CR>
+nnoremap <M-2> :lua require("harpoon.term").sendCommand(1, 2)<CR> <bar> :lua require("harpoon.term").gotoTerminal(1)<CR>i<CR>
+nnoremap <M-3> :lua require("harpoon.term").sendCommand(1, 3)<CR> <bar> :lua require("harpoon.term").gotoTerminal(1)<CR>i<CR>
+nnoremap <M-4> :lua require("harpoon.term").sendCommand(1, 4)<CR> <bar> :lua require("harpoon.term").gotoTerminal(1)<CR>i<CR>
+nnoremap <M-5> :lua require("harpoon.term").sendCommand(1, 6)<CR> <bar> :lua require("harpoon.term").gotoTerminal(1)<CR>i<CR>
+nnoremap <M-6> :lua require("harpoon.term").sendCommand(1, 7)<CR> <bar> :lua require("harpoon.term").gotoTerminal(1)<CR>i<CR>
+nnoremap <M-7> :lua require("harpoon.term").sendCommand(1, 8)<CR> <bar> :lua require("harpoon.term").gotoTerminal(1)<CR>i<CR>
 " nnoremap <M-9> :lua require("harpoon.term").sendCommand(1, "ls -la")<CR> <bar> :lua require("harpoon.term").gotoTerminal(1)<CR>i<CR>
 " nnoremap <M-8>  :lua require("harpoon.term").sendCommand(1, 1)
 
