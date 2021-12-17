@@ -88,15 +88,16 @@ end)
 require'nvim-treesitter.configs'.setup {highlight = { enable = true }}
 require'colorizer'.setup()
 
--- Keymaps
--- vim.api.nvim.set_keymap({mode}, {keymap}, {mapped_to}, {options})
-local map = vim.api.nvim_set_keymap
--- keymap('','','', {})
+-- ALIASES
+local map = vim.api.nvim_set_keymap -- vim.api.nvim.set_keymap({mode}, {keymap}, {mapped_to}, {options})
+local opts = { noremap = true }
+local cmd = vim.cmd
 
+-- Leader key
 map('n', '<Space>', '', {})
 vim.g.mapleader = ' '
 
-local opts = { noremap = true }
+-- KEYMAPS
 -- no arrow keys
 map('n','<Up>','<Nop>', opts)
 map('n','<Down>','<Nop>', opts)
@@ -190,6 +191,7 @@ map('n','<M-6>',':lua require("harpoon.term").sendCommand(1, 7)<CR> <bar> :lua r
 map('n','<M-7>',':lua require("harpoon.term").sendCommand(1, 8)<CR> <bar> :lua require("harpoon.term").gotoTerminal(1)<CR>i<CR>', opts)
 
 -- toggle menu
+map('n', '<leader>mv', ':lua require("harpoon.ui").toggle_quick_menu()<CR>', opts) -- mv for move to overview
 map('n','<leader>hc',':lua require("harpoon.cmd-ui").toggle_quick_menu()<CR>', opts)
 map('n','<leader>hf',':lua require("harpoon.ui").toggle_quick_menu()<CR>', opts)
 -- Go to terminal one
@@ -197,59 +199,11 @@ map('n','<leader>ht',':lua require("harpoon.term").gotoTerminal(1)<CR>i<CR>', op
 -- navigates to next/previous mark
 map('n','<leader>hn',':lua require("harpoon.ui").nav_next()<CR>',opts)
 map('n','<leader>hb',':lua require("harpoon.ui").nav_prev()<CR>',opts)   
--- add mark
-map('n','<leader>ha',':lua require("harpoon.mark").add_file()<CR>',opts)
+-- add/delete mark
+map('n', '<leader>mm', ':lua require("harpoon.mark").add_file()<CR>', opts) -- mm means fast adding files to belly
+map('n', '<leader>mc', ':lua require("harpoon.mark").clear_all()<CR>', opts) -- mc means fast puking away files
 
-local cmd = vim.cmd
-
-cmd 'colorscheme gruvbox'
-cmd 'highlight colorcolumn guibg=#ff7986'
-
---- vimwiki
-vim.g.vimwiki_list = {
-  {
-    path = '~/babidi-wiki/',
-    syntax = 'markdown',
-    ext = '.md'
-  }
-}
-vim.g.vimwiki_ext2syntax = {
-  ['.md'] = 'markdown',
-  ['.markdown'] = 'markdown',
-  ['.mdown'] = 'markdown',
-}
-
--------------------------------------
--- LSP config
-local lspconfig = require'lspconfig'
-lspconfig.gopls.setup {
-  cmd = {"gopls", "serve"},
-  settings = {
-    gopls = {
-      analyses = {
-        unusedparams = true,
-      },
-      staticcheck = true,
-    },
-  },
-}
-    
-lspconfig.tsserver.setup{
-    on_attach = function(client)
-        filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" };
-        cmd = { "typescript-language-server", "--stdio" };
-        root_dir = root_pattern("package.json");                                                                               
-        client.resolved_capabilities.document_formatting = true
-        on_attach(client)
-    end
-}
-
-lspconfig.pyright.setup{}
-
---- https://github.com/lukas-reineke/dotfiles/blob/8465f0075bf3a2d9a69b68249ed7d3d6f9346e13/vim/lua/lsp.lua#L269-L308
---- https://github.com/mattn/efm-langserver
---- local prettier = require "efm/prettier"
-
+------------------- LSP
 -- info
 map('n','<leader>vD',':lua vim.lsp.buf.declaration()<CR>',opts)
 -- map('n','<leader>vdt',':lua vim.lsp.buf.type_definition()<CR>',opts)
@@ -276,72 +230,11 @@ map('n','<leader>vf',':lua vim.lsp.buf.formatting()<CR>',opts)
 map('n','<C-n>',':cnext<CR>',opts)
 map('n','<C-p>',':cprev<CR>',opts)
 
+cmd 'colorscheme gruvbox'
+cmd 'highlight colorcolumn guibg=#ff7986'
+
+require('vimwiki-config')
+require('lsp-config')
+require('autocompletion-config')
+
 -- if vim.loop.os_uname().sysname == 'Linux'
-
-
--------------------------------------------
--- Autocompletion
-
--- Add additional capabilities supported by nvim-cmp
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
-
--- Enable some language servers with the additional completion capabilities offered by nvim-cmp
-local servers = { 'gopls', 'pyright', 'tsserver' }
-for _, lsp in ipairs(servers) do
-  require('lspconfig')[lsp].setup {
-    -- on_attach = my_custom_on_attach,
-    capabilities = capabilities,
-  }
-end
-
--- Set completeopt to have a better completion experience
-vim.o.completeopt = 'menuone,noselect'
-
-local luasnip = require('luasnip')
-
--- nvim-cmp setup
-local cmp = require 'cmp'
-cmp.setup {
-  snippet = {
-    expand = function(args)
-      require('luasnip').lsp_expand(args.body)
-    end,
-  },
-  mapping = {
-    ['<C-p>'] = cmp.mapping.select_prev_item(),
-    ['<C-n>'] = cmp.mapping.select_next_item(),
-    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-f>'] = cmp.mapping.scroll_docs(4),
-    ['<C-Space>'] = cmp.mapping.complete(),
-    ['<C-e>'] = cmp.mapping.close(),
-    ['<CR>'] = cmp.mapping.confirm {
-      behavior = cmp.ConfirmBehavior.Replace,
-      select = true,
-    },
-    ['<Tab>'] = function(fallback)
-      if cmp.visible() then
-        cmp.select_next_item()
-      elseif luasnip.expand_or_jumpable() then
-        luasnip.expand_or_jump()
-      else
-        fallback()
-      end
-    end,
-    ['<S-Tab>'] = function(fallback)
-      if cmp.visible() then
-        cmp.select_prev_item()
-      elseif luasnip.jumpable(-1) then
-        luasnip.jump(-1)
-      else
-        fallback()
-      end
-    end,
-  },
-  sources = cmp.config.sources({
-    { name = 'nvim_lsp' },
-    { name = 'luasnip' },
-  }, {
-    { name = 'buffer' },
-  })
-}
