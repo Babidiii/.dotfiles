@@ -103,9 +103,9 @@ dashboard.section.header.val = dashboard_values[random_dashboard_id]
 dashboard.section.buttons.val = {
   dashboard.button("e", " New File", ":enew<CR>"),
   dashboard.button("f", " Find File", ":Telescope find_files<CR>"),
-  dashboard.button("t", " Find Text", ":Telescope live_grep<CR>"),
   dashboard.button("r", " Recent", ":Telescope oldfiles<CR>"),
-  dashboard.button("c", " Config", ":Telescope dotfiles<CR>"),
+  dashboard.button("t", " Find Text", ":Telescope live_grep<CR>"),
+  dashboard.button("c", " Config", ":edit ~/.config/nvim/init.lua<CR>"),
   dashboard.button("q", " Quit", ":qa<CR>"),
 }
 

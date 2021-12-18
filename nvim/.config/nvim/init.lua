@@ -88,6 +88,7 @@ require('packer').startup(function()
   -- Other
   use 'ThePrimeagen/harpoon' 
 
+  use 'lewis6991/impatient.nvim'
   -- useful
   -- use 'junegunn/goyo.vim'
   -- use 'vuciv/vim-bujo'
