@@ -95,6 +95,11 @@ _G.packer_plugins = {
     path = "/home/rikishi/.local/share/nvim/site/pack/packer/start/harpoon",
     url = "https://github.com/ThePrimeagen/harpoon"
   },
+  ["impatient.nvim"] = {
+    loaded = true,
+    path = "/home/rikishi/.local/share/nvim/site/pack/packer/start/impatient.nvim",
+    url = "https://github.com/lewis6991/impatient.nvim"
+  },
   ["nvim-cmp"] = {
     loaded = true,
     path = "/home/rikishi/.local/share/nvim/site/pack/packer/start/nvim-cmp",
@@ -200,6 +205,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/rikishi/.local/share/nvim/site/pack/packer/start/vim-jsx",
     url = "https://github.com/mxw/vim-jsx"
+  },
+  ["vim-rhubarb"] = {
+    loaded = true,
+    path = "/home/rikishi/.local/share/nvim/site/pack/packer/start/vim-rhubarb",
+    url = "https://github.com/tpope/vim-rhubarb"
   },
   ["vim-surround"] = {
     loaded = true,
