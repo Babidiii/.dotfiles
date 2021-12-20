@@ -88,6 +88,17 @@ require('packer').startup(function()
   }
 
   use 'lewis6991/impatient.nvim'
+  use {
+    "Pocco81/TrueZen.nvim",
+    cmd = {
+      "TZFocus",
+      "TZAtaraxis",
+      "TZMinimalist",
+    },
+    setup = function()
+      require("truezen-config")
+    end
+  }
   -- useful
   -- use 'junegunn/goyo.vim'
   -- use 'vuciv/vim-bujo'

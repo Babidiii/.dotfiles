@@ -74,6 +74,14 @@ _G.packer_plugins = {
     path = "/home/rikishi/.local/share/nvim/site/pack/packer/start/LuaSnip",
     url = "https://github.com/L3MON4D3/LuaSnip"
   },
+  ["TrueZen.nvim"] = {
+    commands = { "TZFocus", "TZAtaraxis", "TZMinimalist" },
+    loaded = false,
+    needs_bufread = false,
+    only_cond = false,
+    path = "/home/rikishi/.local/share/nvim/site/pack/packer/opt/TrueZen.nvim",
+    url = "https://github.com/Pocco81/TrueZen.nvim"
+  },
   ["alpha-nvim"] = {
     loaded = true,
     path = "/home/rikishi/.local/share/nvim/site/pack/packer/start/alpha-nvim",
@@ -230,6 +238,18 @@ _G.packer_plugins = {
 }
 
 time([[Defining packer_plugins]], false)
+-- Setup for: TrueZen.nvim
+time([[Setup for TrueZen.nvim]], true)
+try_loadstring("\27LJ\1\2.\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\19truezen-config\frequire\0", "setup", "TrueZen.nvim")
+time([[Setup for TrueZen.nvim]], false)
+
+-- Command lazy-loads
+time([[Defining lazy-load commands]], true)
+pcall(vim.cmd, [[command -nargs=* -range -bang -complete=file TZMinimalist lua require("packer.load")({'TrueZen.nvim'}, { cmd = "TZMinimalist", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args>, mods = "<mods>" }, _G.packer_plugins)]])
+pcall(vim.cmd, [[command -nargs=* -range -bang -complete=file TZAtaraxis lua require("packer.load")({'TrueZen.nvim'}, { cmd = "TZAtaraxis", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args>, mods = "<mods>" }, _G.packer_plugins)]])
+pcall(vim.cmd, [[command -nargs=* -range -bang -complete=file TZFocus lua require("packer.load")({'TrueZen.nvim'}, { cmd = "TZFocus", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args>, mods = "<mods>" }, _G.packer_plugins)]])
+time([[Defining lazy-load commands]], false)
+
 vim.cmd [[augroup packer_load_aucmds]]
 vim.cmd [[au!]]
   -- Event lazy-loads

@@ -2,7 +2,7 @@
 -- aliases
 -- vim.api.nvim.set_keymap({mode}, {keymap}, {mapped_to}, {options})
 local map = vim.api.nvim_set_keymap 
-local opts = { noremap = true }
+local opts = { noremap = true}
 
 -- Leader key
 vim.api.nvim_set_keymap('', '<Space>', '<Nop>', { noremap = true, silent = true })
@@ -33,7 +33,7 @@ map('n','<leader>Y','gg"+yG', opts)
 
 map('n','<leader>u','<cmd>UndotreeToggle<CR>', opts)
 
-map('n','<leader><CR>','<cmd>so ~/.config/nvim/init.lua<CR>', opts)
+map('n','<leader><CR>','<cmd>source ~/.config/nvim/init.lua<CR>', opts)
 
 map('n','<leader>pv','<cmd>Explore<CR>', opts)
 
@@ -123,3 +123,6 @@ map('n', '<leader>mc', '<cmd>lua require("harpoon.mark").clear_all()<CR>', opts)
 -- Quicklist next/prev
 map('n','<C-n>','<cmd>cnext<CR>',opts)
 map('n','<C-p>','<cmd>cprev<CR>',opts)
+
+-- TrueZen
+map('n','<leader>tz','<cmd>TZAtaraxis<CR>',opts)
