@@ -99,6 +99,8 @@ require('packer').startup(function()
       require("truezen-config")
     end
   }
+
+
   -- useful
   -- use 'junegunn/goyo.vim'
   -- use 'vuciv/vim-bujo'

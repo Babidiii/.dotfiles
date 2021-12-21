@@ -1,11 +1,13 @@
+-- ------------------------------------------------------------------------
+-- Lsp
+-- ------------------------------------------------------------------------
+
 -- Add additional capabilities supported by nvim-cmp
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
-
 local bufnr_map=vim.api.nvim_buf_set_keymap
 local on_attach =function(_, bufrn)
-
   local opts = { noremap = true, silent = true }
   bufnr_map(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
   bufnr_map(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
@@ -43,9 +45,37 @@ for _, lsp in ipairs(servers) do
   }
 end
 
+
+-- lspconfig.html.setup {
+--   on_attach = on_attach,
+--   capabilities = capabilities,
+--   cmd = lspcontainers.command('html', {
+-- 	image = "lspcontainers/html-language-server:1.4.0",
+-- 	cmd = function (runtime, volume, image)
+--       return {
+--         runtime,
+--         "container",
+--         "run",
+--         "--interactive",
+--         "--rm",
+--         "--volume",
+--         volume,
+--         image
+--       }
+--     end,
+--   }),
+--   root_dir = lspconfig.util.root_pattern(".git", vim.fn.getcwd()),
+-- }
+
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noselect'
 
+
+
+
+-- ------------------------------------------------------------------------
+-- Snipets
+-- ------------------------------------------------------------------------
 local luasnip = require('luasnip')
 
 -- nvim-cmp setup

@@ -1,7 +1,7 @@
 --- vimwiki
 vim.g.vimwiki_list = {
   {
-    path = '~/babidi-wiki/',
+    path = '~/Desktop/project/fullstackfullnotes/content/notes/',
     syntax = 'markdown',
     ext = '.md'
   }
