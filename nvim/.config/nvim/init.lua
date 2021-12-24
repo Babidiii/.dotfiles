@@ -30,6 +30,9 @@ vim.bo.tabstop = 2
 vim.bo.expandtab = true
 vim.bo.smartindent = true
 
+-- other
+vim.g.rustfmt_autosave = 1
+
 
 require('packer').startup(function()
   -- packer manage itself
@@ -100,10 +103,9 @@ require('packer').startup(function()
     end
   }
 
-
   -- useful
   -- use 'junegunn/goyo.vim'
-  -- use 'vuciv/vim-bujo'
+  use 'vuciv/vim-bujo'
 end)
 
 -- aliases

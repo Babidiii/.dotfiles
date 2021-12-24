@@ -63,8 +63,8 @@ map('n','<leader>j','<cmd>m .+1<CR>==', opts)
 map('n','<leader>k','<cmd>m .-2<CR>==', opts)
 
 -- Cargo
-map('n','<leader>cc','<cmd>cargo clippy', opts)
-map('n','<leader>cr','<cmd>cargo run', opts)
+map('n','<leader>cc','<cmd>Cargo clippy<CR>', opts)
+map('n','<leader>cr','<cmd>Cargo run<CR>', opts)
 
 -- Git Fugitive
 map('n','<leader>gs','<cmd>G<CR>', {})

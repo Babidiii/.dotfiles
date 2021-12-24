@@ -37,13 +37,32 @@ local on_attach =function(_, bufrn)
 end
 
 -- Enable some language servers with the additional completion capabilities offered by nvim-cmp
-local servers = { 'gopls', 'pyright', 'tsserver' }
+local servers = { 'gopls', 'pyright', 'tsserver', 'vuels' }
 for _, lsp in ipairs(servers) do
   require('lspconfig')[lsp].setup {
     on_attach= on_attach,
     capabilities = capabilities,
   }
 end
+
+
+require('lspconfig').rust_analyzer.setup({
+    on_attach=on_attach,
+    settings = {
+        ["rust-analyzer"] = {
+            assist = {
+                importGranularity = "module",
+                importPrefix = "by_self",
+            },
+            cargo = {
+                loadOutDirsFromCheck = true
+            },
+            procMacro = {
+                enable = true
+            },
+        }
+    }
+})
 
 
 -- lspconfig.html.setup {
