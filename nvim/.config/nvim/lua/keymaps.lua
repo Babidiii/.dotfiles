@@ -55,8 +55,8 @@ map('i','?','?<c-g>u', opts)
 -- nnoremap <expr> j (v:count > 5 ? "m'" . v:count : "") . 'j'
 
 -- Moving block cursor in any mode
-map('v','J','<cmd>m \'>+1<CR>gv=gv', opts)
-map('v','K','<cmd>m \'<-2<CR>gv=gv', opts)
+map('v','J',[[m '>+1<CR>gv=gv]], opts)
+map('v','K',[[m '<-2<CR>gv=gv]], opts)
 map('i','<C-j>','<esc><cmd>m .+1<CR>==i', opts)
 map('i','<C-k>','<esc><cmd>m .-2<CR>==i', opts)
 map('n','<leader>j','<cmd>m .+1<CR>==', opts)
@@ -126,3 +126,11 @@ map('n','<C-p>','<cmd>cprev<CR>',opts)
 
 -- TrueZen
 map('n','<leader>tz','<cmd>TZAtaraxis<CR>',opts)
+
+
+
+map('n','<Leader>tu', '<Plug>BujoChecknormal', opts)
+map('n','<Leader>th', '<Plug>BujoAddnormal', opts)
+-- let g:bujo#todo_file_path = $HOME . "/.cache/bujo"
+-- let g:bujo#window_width = 60
+

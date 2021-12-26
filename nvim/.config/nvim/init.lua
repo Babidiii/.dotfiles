@@ -33,12 +33,22 @@ vim.bo.smartindent = true
 -- other
 vim.g.rustfmt_autosave = 1
 
+vim.opt.undofile = true
+vim.g.undodir ="~/.cache/nvim/undodir"
 
 require('packer').startup(function()
   -- packer manage itself
   use 'wbthomason/packer.nvim'
 
   use 'flazz/vim-colorschemes'            
+  use {
+    'glepnir/galaxyline.nvim',
+    branch = 'main',
+    -- your statusline
+    config = function() require('statusline-config') end,
+    -- some optional icons
+    requires = {'kyazdani42/nvim-web-devicons', opt = true}
+  }
 
   use 'vimwiki/vimwiki'
 
@@ -57,8 +67,8 @@ require('packer').startup(function()
 
   -- Treesitter
   use {
-      'nvim-treesitter/nvim-treesitter',
-      run = ':TSUpdate'
+    'nvim-treesitter/nvim-treesitter',
+    run = ':TSUpdate'
   }
   use 'nvim-treesitter/playground'
   use 'nvim-treesitter/nvim-treesitter-textobjects'
@@ -73,39 +83,39 @@ require('packer').startup(function()
   use 'unblevable/quick-scope'
   use 'junegunn/vim-easy-align'
   use ({ 'goolord/alpha-nvim',
-    requires = { 'kyazdani42/nvim-web-devicons' },
-  })
+  requires = { 'kyazdani42/nvim-web-devicons' },
+})
 
-  -- Telescope
-  use ({ 
-    'nvim-telescope/telescope.nvim',
-    requires = {'nvim-lua/popup.nvim', 'nvim-lua/plenary.nvim'},
-  })
-  use 'nvim-telescope/telescope-project.nvim'
+-- Telescope
+use ({ 
+  'nvim-telescope/telescope.nvim',
+  requires = {'nvim-lua/popup.nvim', 'nvim-lua/plenary.nvim'},
+})
+use 'nvim-telescope/telescope-project.nvim'
 
-  -- Other
-  use 'ThePrimeagen/harpoon' 
-  use {
-    "andymass/vim-matchup",
-    event = "BufRead"
-  }
+-- Other
+use 'ThePrimeagen/harpoon' 
+use {
+  "andymass/vim-matchup",
+  event = "BufRead"
+}
 
-  use 'lewis6991/impatient.nvim'
-  use {
-    "Pocco81/TrueZen.nvim",
-    cmd = {
-      "TZFocus",
-      "TZAtaraxis",
-      "TZMinimalist",
-    },
-    setup = function()
-      require("truezen-config")
-    end
-  }
+use 'lewis6991/impatient.nvim'
+use {
+  "Pocco81/TrueZen.nvim",
+  cmd = {
+    "TZFocus",
+    "TZAtaraxis",
+    "TZMinimalist",
+  },
+  setup = function()
+    require("truezen-config")
+  end
+}
 
-  -- useful
-  -- use 'junegunn/goyo.vim'
-  use 'vuciv/vim-bujo'
+-- useful
+-- use 'junegunn/goyo.vim'
+use 'vuciv/vim-bujo'
 end)
 
 -- aliases

@@ -97,6 +97,12 @@ _G.packer_plugins = {
     path = "/home/rikishi/.local/share/nvim/site/pack/packer/start/cmp_luasnip",
     url = "https://github.com/saadparwaiz1/cmp_luasnip"
   },
+  ["galaxyline.nvim"] = {
+    config = { "\27LJ\1\0021\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\22statusline-config\frequire\0" },
+    loaded = true,
+    path = "/home/rikishi/.local/share/nvim/site/pack/packer/start/galaxyline.nvim",
+    url = "https://github.com/glepnir/galaxyline.nvim"
+  },
   harpoon = {
     loaded = true,
     path = "/home/rikishi/.local/share/nvim/site/pack/packer/start/harpoon",
@@ -247,6 +253,10 @@ time([[Defining packer_plugins]], false)
 time([[Setup for TrueZen.nvim]], true)
 try_loadstring("\27LJ\1\2.\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\19truezen-config\frequire\0", "setup", "TrueZen.nvim")
 time([[Setup for TrueZen.nvim]], false)
+-- Config for: galaxyline.nvim
+time([[Config for galaxyline.nvim]], true)
+try_loadstring("\27LJ\1\0021\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\22statusline-config\frequire\0", "config", "galaxyline.nvim")
+time([[Config for galaxyline.nvim]], false)
 
 -- Command lazy-loads
 time([[Defining lazy-load commands]], true)
