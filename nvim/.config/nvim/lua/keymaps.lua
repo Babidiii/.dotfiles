@@ -33,7 +33,7 @@ map('n','<leader>Y','gg"+yG', opts)
 
 map('n','<leader>u','<cmd>UndotreeToggle<CR>', opts)
 
-map('n','<leader><CR>','<cmd>source ~/.config/nvim/init.lua<CR>', opts)
+map('n','<leader><CR>','<cmd>source ~/.config/nvim/init.lua<CR>', {noremap = true })
 
 map('n','<leader>pv','<cmd>Explore<CR>', opts)
 

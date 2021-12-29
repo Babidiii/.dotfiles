@@ -14,7 +14,7 @@ vim.o.hlsearch = false
 vim.o.guicursor = ""
 vim.o.scrolloff = 8
 vim.o.smartcase = true
-vim.o.background = "dark"
+-- vim.o.background = "dark"
 
 -- local to window
 vim.wo.number = true
@@ -40,7 +40,9 @@ require('packer').startup(function()
   -- packer manage itself
   use 'wbthomason/packer.nvim'
 
-  use 'flazz/vim-colorschemes'            
+  use "rebelot/kanagawa.nvim"
+  use 'tiagovla/tokyodark.nvim'
+  -- use 'flazz/vim-colorschemes'            
   use {
     'glepnir/galaxyline.nvim',
     branch = 'main',
@@ -122,7 +124,7 @@ end)
 local cmd = vim.cmd
 
 -- colorscheme
-cmd 'colorscheme gruvbox'
+vim.cmd("colorscheme kanagawa")
 cmd 'highlight colorcolumn guibg=#ff7986'
 
 -- plugin configuration
@@ -138,3 +140,6 @@ require('alpha-config')
 require('keymaps')
 
 -- if vim.loop.os_uname().sysname == 'Linux'
+
+-- cmd 'source ~/.config/nvim/utils.vim'
+

@@ -113,6 +113,11 @@ _G.packer_plugins = {
     path = "/home/rikishi/.local/share/nvim/site/pack/packer/start/impatient.nvim",
     url = "https://github.com/lewis6991/impatient.nvim"
   },
+  ["kanagawa.nvim"] = {
+    loaded = true,
+    path = "/home/rikishi/.local/share/nvim/site/pack/packer/start/kanagawa.nvim",
+    url = "https://github.com/rebelot/kanagawa.nvim"
+  },
   ["nvim-cmp"] = {
     loaded = true,
     path = "/home/rikishi/.local/share/nvim/site/pack/packer/start/nvim-cmp",
@@ -183,6 +188,11 @@ _G.packer_plugins = {
     path = "/home/rikishi/.local/share/nvim/site/pack/packer/start/telescope.nvim",
     url = "https://github.com/nvim-telescope/telescope.nvim"
   },
+  ["tokyodark.nvim"] = {
+    loaded = true,
+    path = "/home/rikishi/.local/share/nvim/site/pack/packer/start/tokyodark.nvim",
+    url = "https://github.com/tiagovla/tokyodark.nvim"
+  },
   undotree = {
     loaded = true,
     path = "/home/rikishi/.local/share/nvim/site/pack/packer/start/undotree",
@@ -192,11 +202,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/rikishi/.local/share/nvim/site/pack/packer/start/vim-bujo",
     url = "https://github.com/vuciv/vim-bujo"
-  },
-  ["vim-colorschemes"] = {
-    loaded = true,
-    path = "/home/rikishi/.local/share/nvim/site/pack/packer/start/vim-colorschemes",
-    url = "https://github.com/flazz/vim-colorschemes"
   },
   ["vim-commentary"] = {
     loaded = true,
