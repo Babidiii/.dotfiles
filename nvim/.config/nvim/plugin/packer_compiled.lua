@@ -103,6 +103,11 @@ _G.packer_plugins = {
     path = "/home/rikishi/.local/share/nvim/site/pack/packer/start/galaxyline.nvim",
     url = "https://github.com/glepnir/galaxyline.nvim"
   },
+  ["gruvbox.nvim"] = {
+    loaded = true,
+    path = "/home/rikishi/.local/share/nvim/site/pack/packer/start/gruvbox.nvim",
+    url = "https://github.com/ellisonleao/gruvbox.nvim"
+  },
   harpoon = {
     loaded = true,
     path = "/home/rikishi/.local/share/nvim/site/pack/packer/start/harpoon",
@@ -117,6 +122,16 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/rikishi/.local/share/nvim/site/pack/packer/start/kanagawa.nvim",
     url = "https://github.com/rebelot/kanagawa.nvim"
+  },
+  ["lush.nvim"] = {
+    loaded = true,
+    path = "/home/rikishi/.local/share/nvim/site/pack/packer/start/lush.nvim",
+    url = "https://github.com/rktjmp/lush.nvim"
+  },
+  ["neovim-ayu"] = {
+    loaded = true,
+    path = "/home/rikishi/.local/share/nvim/site/pack/packer/start/neovim-ayu",
+    url = "https://github.com/Shatur/neovim-ayu"
   },
   ["nvim-cmp"] = {
     loaded = true,

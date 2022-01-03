@@ -20,11 +20,11 @@ gitlab= "https://gitlab.com/Babidiii"
 
 [colors]
 background = ${xrdb:color0:#222}
-background-alt =  ${xrdb:color5:#444}
-foreground = ${xrdb:color7:#222}
+background-alt =  ${xrdb:color19:#444}
+foreground = #DDDDDD ; ${xrdb:color7:#222}
 foreground-alt = ${xrdb:color8:#555}
-primary = ${xrdb:color1:#222}
-secondary = #e60053
+primary = ${xrdb:color3:#222}
+secondary = ${xrdb:color6:#e60053}
 alert = #bd2c40
 
 
