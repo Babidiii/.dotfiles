@@ -70,6 +70,7 @@ require('packer').startup(function()
   use 'hrsh7th/cmp-nvim-lsp'     -- LSP source for nvim-cmp
   use 'saadparwaiz1/cmp_luasnip' -- Snippets source for nvim-cmp
   use 'L3MON4D3/LuaSnip'         -- Snippets plugin
+  use "rafamadriz/friendly-snippets"
 
   -- Treesitter
   use {
@@ -82,7 +83,7 @@ require('packer').startup(function()
   -- utils 
   use 'tpope/vim-surround'
   use 'tpope/vim-commentary'
-  use 'tpope/vim-fugitive' -- git features
+  use 'tpope/vim-fugitive' -- git    features
   use 'tpope/vim-rhubarb'  -- github feature for gitfugitive
   use 'norcalli/nvim-colorizer.lua'
   use 'mbbill/undotree'

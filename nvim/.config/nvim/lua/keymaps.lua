@@ -33,7 +33,7 @@ map('n','<leader>Y','gg"+yG', opts)
 
 map('n','<leader>u','<cmd>UndotreeToggle<CR>', opts)
 
-map('n','<leader><CR>','<cmd>source ~/.config/nvim/init.lua<CR>', {noremap = true })
+map('n','<leader><CR>',[[:source ~/.config/nvim/init.lua<CR>]], {noremap = true })
 
 map('n','<leader>pv','<cmd>Explore<CR>', opts)
 
@@ -55,8 +55,8 @@ map('i','?','?<c-g>u', opts)
 -- nnoremap <expr> j (v:count > 5 ? "m'" . v:count : "") . 'j'
 
 -- Moving block cursor in any mode
-map('v','J',[[m '>+1<CR>gv=gv]], opts)
-map('v','K',[[m '<-2<CR>gv=gv]], opts)
+map('v','J',[[:m '>+1<CR>gv=gv]], opts)
+map('v','K',[[:m '<-2<CR>gv=gv]], opts)
 map('i','<C-j>','<esc><cmd>m .+1<CR>==i', opts)
 map('i','<C-k>','<esc><cmd>m .-2<CR>==i', opts)
 map('n','<leader>j','<cmd>m .+1<CR>==', opts)
