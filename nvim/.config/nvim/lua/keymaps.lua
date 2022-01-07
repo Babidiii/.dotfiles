@@ -35,7 +35,8 @@ map('n','<leader>u','<cmd>UndotreeToggle<CR>', opts)
 
 map('n','<leader><CR>',[[:source ~/.config/nvim/init.lua<CR>]], {noremap = true })
 
-map('n','<leader>pv','<cmd>Explore<CR>', opts)
+-- map('n','<leader>pv','<cmd>Explore<CR>', opts)
+map('n','<leader>pv',[[:lua require('lir.float').toggle()<CR>]], opts)
 
 -- Fast search
 map('n','Y','y$', opts)
@@ -92,6 +93,7 @@ map('n','<leader>fh','<cmd>Telescope help_tags<cr>',opts)
 map('n','<leader>fl','<cmd>Telescope loclist<cr>',opts)
 map('n','<leader>fc','<cmd>Telescope quickfix<cr>',opts)
 map('n','<leader>fu','<cmd>Telescope git_files<cr>',opts)
+map('n','<leader>fj',"<cmd>Telescope<CR>", {noremap = true, silent = true})
 map('n','<leader>fp',"<cmd>lua require'telescope'.extensions.project.project{}<CR>", {noremap = true, silent = true})
 map('n','ca','<cmd>Telescope lsp_code_actions<CR>', { noremap = false, silent= true})
 

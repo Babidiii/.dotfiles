@@ -128,6 +128,11 @@ _G.packer_plugins = {
     path = "/home/rikishi/.local/share/nvim/site/pack/packer/start/kanagawa.nvim",
     url = "https://github.com/rebelot/kanagawa.nvim"
   },
+  ["lir.nvim"] = {
+    loaded = true,
+    path = "/home/rikishi/.local/share/nvim/site/pack/packer/start/lir.nvim",
+    url = "https://github.com/tamago324/lir.nvim"
+  },
   ["lush.nvim"] = {
     loaded = true,
     path = "/home/rikishi/.local/share/nvim/site/pack/packer/start/lush.nvim",

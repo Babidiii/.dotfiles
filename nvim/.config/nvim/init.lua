@@ -90,39 +90,43 @@ require('packer').startup(function()
   use 'unblevable/quick-scope'
   use 'junegunn/vim-easy-align'
   use ({ 'goolord/alpha-nvim',
-  requires = { 'kyazdani42/nvim-web-devicons' },
-})
+    requires = { 'kyazdani42/nvim-web-devicons' },
+  })
 
--- Telescope
-use ({ 
-  'nvim-telescope/telescope.nvim',
-  requires = {'nvim-lua/popup.nvim', 'nvim-lua/plenary.nvim'},
-})
-use 'nvim-telescope/telescope-project.nvim'
+  -- Telescope
+  use ({ 
+    'nvim-telescope/telescope.nvim',
+    requires = {'nvim-lua/popup.nvim', 'nvim-lua/plenary.nvim'},
+  })
+  use 'nvim-telescope/telescope-project.nvim'
 
--- Other
-use 'ThePrimeagen/harpoon' 
-use {
-  "andymass/vim-matchup",
-  event = "BufRead"
-}
+  -- File explorer
+  use 'tamago324/lir.nvim'
+  use 'nvim-lua/plenary.nvim'
 
-use 'lewis6991/impatient.nvim'
-use {
-  "Pocco81/TrueZen.nvim",
-  cmd = {
-    "TZFocus",
-    "TZAtaraxis",
-    "TZMinimalist",
-  },
-  setup = function()
-    require("truezen-config")
-  end
-}
+  -- Other
+  use 'ThePrimeagen/harpoon' 
+  use {
+    "andymass/vim-matchup",
+    event = "BufRead"
+  }
 
--- useful
--- use 'junegunn/goyo.vim'
-use 'vuciv/vim-bujo'
+  use 'lewis6991/impatient.nvim'
+  use {
+    "Pocco81/TrueZen.nvim",
+    cmd = {
+      "TZFocus",
+      "TZAtaraxis",
+      "TZMinimalist",
+    },
+    setup = function()
+      require("truezen-config")
+    end
+  }
+
+  -- useful
+  -- use 'junegunn/goyo.vim'
+  use 'vuciv/vim-bujo'
 end)
 
 -- aliases
@@ -140,6 +144,7 @@ require('vimwiki-config')
 require('autocompletion-config')
 require('treesitter-config')
 require('alpha-config')
+require('file-explorer-config')
 
 -- keymaps
 require('keymaps')
