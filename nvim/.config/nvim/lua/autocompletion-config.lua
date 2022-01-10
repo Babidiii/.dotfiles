@@ -65,6 +65,46 @@ require('lspconfig').rust_analyzer.setup({
     }
 })
 
+local workspace_dir = vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t')
+local workdir = vim.fn.getcwd()
+local volume = workdir..":"..workdir..":z"
+
+require'lspconfig'.jdtls.setup{
+  cmd = {
+    'podman', 
+    'run', '--rm', '--interactive', 
+    '--name', 'jdt_nvim_container',
+    '--volume='..volume,
+    'localhost/jdt_lsp_container', 
+    'java', 
+    '-Declipse.application=org.eclipse.jdt.ls.core.id1', 
+    '-Dosgi.bundles.defaultStartLevel=4', 
+    '-Declipse.product=org.eclipse.jdt.ls.core.product', 
+    '-Dlog.protocol=true', 
+    '-Dlog.level=ALL', '-Xms1g', 
+    '-jar', '/app/jdt_lsp/plugins/org.eclipse.equinox.launcher_1.6.400.v20210924-0641.jar', 
+    '-configuration', '/app/jdt_lsp/config_linux/', 
+    '-data', vim.fn.expand('/app/jdtls-workspace/') .. workspace_dir,
+    '--add-modules=ALL-SYSTEM',
+    '--add-opens', 'java.base/java.util=ALL-UNNAMED',
+    '--add-opens', 'java.base/java.lang=ALL-UNNAMED',
+  },
+  -- root_dir = require('lspconfig').util.root_pattern(".git", vim.fn.getcwd()),
+  capabilities = capabilities,
+  on_attach = on_attach,
+}
+
+
+-- 'java',
+-- '-Declipse.application=org.eclipse.jdt.ls.core.id1',
+-- '-Dosgi.bundles.defaultStartLevel=4',
+-- '-Declipse.product=org.eclipse.jdt.ls.core.product',
+-- '-Dlog.protocol=true',
+-- '-Dlog.level=ALL',
+-- '-Xms1g',
+-- '-jar', 'path_to_jdtls_install/plugins/org.eclipse.equinox_launcher...',
+-- '-configuration', '/path/to/jdtls_install_location/config_linux/',
+-- '-data', vim.fn.expand('~/.cache/jdtls-workspace') .. workspace_dir,
 
 -- lspconfig.html.setup {
 --   on_attach = on_attach,
