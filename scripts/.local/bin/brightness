@@ -1,0 +1,39 @@
+#!/bin/sh
+
+brightness_file="/sys/class/backlight/*/brightness"
+brightness_max="/sys/class/backlight/*/max_brightness"
+min=400
+max=$(cat $brightness_max)
+
+set_backlight(){
+    printf '%s' "$1" | tee $brightness_file > /dev/null
+}
+
+if ! test -f "$(readlink --canonicalize $brightness_file)" ; then
+    printf '\033[31mERROR:\033[0m Could not find a `brightness` file.\n' 1>&2
+    exit 2
+fi
+
+if test "$#" -eq 0 ; then
+    printf 'Set brightness to: '
+    read -r input
+    set_backlight "$input"
+    exit 0
+fi
+
+
+bright="$1"
+if [[ $bright =~ ^[0-9]{2}%|100% ]]; then
+    curr=$(cat $brightness_file)                        # percent
+    new_val=$((${bright%%\%*} * $max / 100))
+    if [[ ${bright: -1} = "+" ]]; then                  # increment
+        new_val=$(( $curr + $new_val))
+        bright=$(( $new_val > $max ? $max : $new_val ))     # max check
+    elif [[ ${bright: -1} = "-" ]]; then                # decrement
+        new_val=$(( $curr - $new_val))
+    fi
+
+    bright=$(( $new_val < $min ? $min : $new_val ))     # min check
+    set_backlight "$bright"
+    exit 0
+fi

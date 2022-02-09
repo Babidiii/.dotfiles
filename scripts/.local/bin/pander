@@ -1,0 +1,22 @@
+#!/usr/bin/env sh
+SOURCE_FORMAT="markdown\
++grid_tables\
++backtick_code_blocks\
++auto_identifiers\
++strikeout\
++yaml_metadata_block\
++implicit_figures\
++all_symbols_escapable\
++link_attributes\
++smart\
++fenced_divs"
+
+if [ $# -lt 2 ]; then
+  printf "/Usage\n%s input.md FORMAT output.pdf\n" ${0}
+  exit 1
+fi
+
+file="${1}"
+output="${2}"
+shift 2
+ls "${file}" | entr -r pandoc --from ${SOURCE_FORMAT}  --listings --columns=50 --toc --dpi=300 --pdf-engine=xelatex "${file}" -o "${output}" $@
