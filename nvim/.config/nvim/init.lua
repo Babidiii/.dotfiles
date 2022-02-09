@@ -72,6 +72,10 @@ require('packer').startup(function()
   use 'L3MON4D3/LuaSnip'         -- Snippets plugin
   use "rafamadriz/friendly-snippets"
 
+  -- TS/JS
+  use "jose-elias-alvarez/null-ls.nvim"
+  use "jose-elias-alvarez/nvim-lsp-ts-utils"
+
   -- Treesitter
   use {
     'nvim-treesitter/nvim-treesitter',
@@ -131,6 +135,8 @@ require('packer').startup(function()
 
   -- ascii drawing
   use "jbyuki/venn.nvim"
+  -- silicon 
+  use "segeljakt/vim-silicon"
 end)
 
 -- aliases

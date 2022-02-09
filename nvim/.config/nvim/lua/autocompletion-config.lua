@@ -1,13 +1,15 @@
 -- ------------------------------------------------------------------------
 -- Lsp
 -- ------------------------------------------------------------------------
+local lspconfig = require("lspconfig")
+local null_ls = require("null-ls")
 
 -- Add additional capabilities supported by nvim-cmp
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 local bufnr_map=vim.api.nvim_buf_set_keymap
-local on_attach =function(_, bufrn)
+local on_attach =function(client, bufrn)
   local opts = { noremap = true, silent = true }
   bufnr_map(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
   bufnr_map(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
@@ -30,6 +32,9 @@ local on_attach =function(_, bufrn)
   bufnr_map(bufnr, 'n', '<leader>vf','<cmd>lua vim.lsp.buf.formatting()<CR>',opts)
   vim.cmd [[ command! Format execute 'lua vim.lsp.buf.formatting()' ]]
 
+  if client.resolved_capabilities.document_formatting then
+    vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()")
+  end
   -- Diagnostic
   -- bufnr_map(bufnr, n','<leader>ve','<cmd>lua vim.lsp.diagnostic.show_line_diagnostics({ border = "rounded" })<CR>',opts)
   -- bufnr_map(bufnr, n','<leader>vn','<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>',opts)
@@ -38,16 +43,40 @@ local on_attach =function(_, bufrn)
 end
 
 -- Enable some language servers with the additional completion capabilities offered by nvim-cmp
-local servers = { 'gopls', 'pyright', 'tsserver', 'vuels' }
+local servers = { 'gopls', 'pyright', 'vuels' }
 for _, lsp in ipairs(servers) do
-  require('lspconfig')[lsp].setup {
+  lspconfig[lsp].setup {
     on_attach= on_attach,
     capabilities = capabilities,
   }
 end
 
+lspconfig.tsserver.setup({
+    on_attach = function(client, bufnr)
+        client.resolved_capabilities.document_formatting = false
+        client.resolved_capabilities.document_range_formatting = false
 
-require('lspconfig').rust_analyzer.setup({
+        local ts_utils = require("nvim-lsp-ts-utils")
+        ts_utils.setup({})
+        ts_utils.setup_client(client)
+        bufnr_map(bufnr, "n", "gs", ":TSLspOrganize<CR>", { silent = true })
+        bufnr_map(bufnr, "n", "gR", ":TSLspRenameFile<CR>", { silent = true })
+        bufnr_map(bufnr, "n", "go", ":TSLspImportAll<CR>", { silent = true })
+        on_attach(client, bufnr)
+    end,
+})
+
+null_ls.setup({
+    sources = {
+        null_ls.builtins.diagnostics.eslint,
+        null_ls.builtins.code_actions.eslint,
+        null_ls.builtins.formatting.prettier,
+	null_ls.builtins.completion.spell,
+    },
+    on_attach = on_attach,
+})
+
+lspconfig.rust_analyzer.setup({
     on_attach=on_attach,
     settings = {
         ["rust-analyzer"] = {
