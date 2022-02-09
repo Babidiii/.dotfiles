@@ -12,10 +12,18 @@ set -o vi
 # - Prompt
 #----------------------------------------------------------------------------
 if_failed(){
-  [ $? -ne 0 ] && echo -e "\e[01;31m"
+  [ $? -ne 0 ] && echo -e "\e[1;31m"
 }
+
+rightprompt()
+{
+    printf "%*s" $COLUMNS "right prompt"
+}
+
 # -> [rikishi@toru ~]$  ($ = red if previous cmd failed)
-PS1='\[\033[01;36m\][\u@\h\[\033[01;37m\] \W\[\033[01;36m\]]$(if_failed)\$\[\033[00m\] '
+# PS1='\[\033[01;36m\][\u@\h\[\033[01;37m\] \W\[\033[01;36m\]]$(if_failed)\$\[\033[00m\] '
+PROMPT_COMMAND='if [ $? = 0 ]; then DOLLAR_COLOR="\033[0m"; else DOLLAR_COLOR="\033[1;31m"; fi'
+PS1='\[\033[01;36m\][\u@\h\[\033[01;37m\] \W\[\033[01;36m\]]\[\033[00m\]\[$(echo -ne $DOLLAR_COLOR)\]$\[\033[m\] '
 
 #----------------------------------------------------------------------------
 # - Alias
