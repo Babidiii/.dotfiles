@@ -42,6 +42,24 @@ local on_attach =function(client, bufrn)
   -- bufnr_map(bufnr, n','<leader>vq','<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>',opts)
 end
 
+local border = {
+	{"╭", "FloatBorder"},
+	{"─", "FloatBorder"},
+	{"╮", "FloatBorder"},
+	{"│", "FloatBorder"},
+	{"╯", "FloatBorder"},
+	{"─", "FloatBorder"},
+	{"╰", "FloatBorder"},
+	{"│", "FloatBorder"},
+}
+
+local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
+function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
+  opts = opts or {}
+  opts.border = opts.border or border
+  return orig_util_open_floating_preview(contents, syntax, opts, ...)
+end
+
 -- Enable some language servers with the additional completion capabilities offered by nvim-cmp
 local servers = { 'gopls', 'pyright', 'vuels' }
 for _, lsp in ipairs(servers) do
@@ -278,6 +296,52 @@ cmp.setup.cmdline(':', {
     { name = 'cmdline' }
   })
 })
+
+vim.diagnostic.config({
+  virtual_text = {
+    prefix = '■', -- Could be '●', '▎', 'x'
+  }
+})
+
+-- if vim.tbl_isempty(vim.fn.sign_getdefined(SIGN_NAME)) then
+--     vim.fn.sign_define(SIGN_NAME, { text = "💡", texthl = "LspDiagnosticsDefaultInformation" })
+-- end
+
+
+vim.cmd [[
+  highlight! DiagnosticLineNrError guibg=#51202A guifg=#FF0000 gui=bold
+  highlight! DiagnosticLineNrWarn guibg=#51412A guifg=#FFA500 gui=bold
+  highlight! DiagnosticLineNrInfo guibg=#1E535D guifg=#00FFFF gui=bold
+  highlight! DiagnosticLineNrHint guibg=#1E205D guifg=#0000FF gui=bold
+]]
+
+local function lspSymbol(name, icon, hll)
+  local hl = "DiagnosticSign" .. name
+	vim.fn.sign_define(hl, { text = icon, numhl = hll, texthl = hl })
+end
+
+lspSymbol("Error", "", "DiagnosticLineNrError")
+lspSymbol("Info",  "", "DiagnosticLineNrWarn")
+lspSymbol("Hint",  "", "DiagnosticLineNrInfo")
+lspSymbol("Warn",  "", "DiagnosticLineNrHint")
+
+-- local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
+-- for type, icon in pairs(signs) do
+--   local hl = "DiagnosticSign" .. type
+--   vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+-- end
+
+-- vim.cmd [[
+--   highlight! DiagnosticLineNrError guibg=#51202A guifg=#FF0000 gui=bold
+--   highlight! DiagnosticLineNrWarn guibg=#51412A guifg=#FFA500 gui=bold
+--   highlight! DiagnosticLineNrInfo guibg=#1E535D guifg=#00FFFF gui=bold
+--   highlight! DiagnosticLineNrHint guibg=#1E205D guifg=#0000FF gui=bold
+
+--   sign define DiagnosticSignError text=E texthl=DiagnosticSignError linehl= numhl=DiagnosticLineNrError
+--   sign define DiagnosticSignWarn text=W texthl=DiagnosticSignWarn linehl= numhl=DiagnosticLineNrWarn
+--   sign define DiagnosticSignInfo text=I texthl=DiagnosticSignInfo linehl= numhl=DiagnosticLineNrInfo
+--   sign define DiagnosticSignHint text=H texthl=DiagnosticSignHint linehl= numhl=DiagnosticLineNrHint
+-- ]]
 
 
 --- https://github.com/lukas-reineke/dotfiles/blob/8465f0075bf3a2d9a69b68249ed7d3d6f9346e13/vim/lua/lsp.lua#L269-L308
