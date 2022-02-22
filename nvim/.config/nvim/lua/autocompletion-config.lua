@@ -320,10 +320,15 @@ local function lspSymbol(name, icon, hll)
 	vim.fn.sign_define(hl, { text = icon, numhl = hll, texthl = hl })
 end
 
-lspSymbol("Error", "", "DiagnosticLineNrError")
-lspSymbol("Info",  "", "DiagnosticLineNrWarn")
-lspSymbol("Hint",  "", "DiagnosticLineNrInfo")
-lspSymbol("Warn",  "", "DiagnosticLineNrHint")
+-- lspSymbol("Error", "", "DiagnosticLineNrError")
+-- lspSymbol("Info",  "", "DiagnosticLineNrInfo")
+-- lspSymbol("Hint",  "", "DiagnosticLineNrHint")
+-- lspSymbol("Warn",  "", "DiagnosticLineNrWarn")
+
+lspSymbol("Error", "🦀", "DiagnosticLineNrError")
+lspSymbol("Info",  "❔", "DiagnosticLineNrInfo")
+lspSymbol("Hint",  "👀", "DiagnosticLineNrHint")
+lspSymbol("Warn",  "🦍", "DiagnosticLineNrWarn")
 
 -- local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
 -- for type, icon in pairs(signs) do
