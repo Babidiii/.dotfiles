@@ -91,3 +91,5 @@ alias cpwd="pwd | xclip -sel clip"
 alias vim="nvim"
 export EDITOR="nvim"
 
+source $HOME/Applications/goto/goto.sh
+alias gt='goto'
