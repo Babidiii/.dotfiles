@@ -15,13 +15,11 @@ vim.o.guicursor = ""
 vim.o.scrolloff = 8
 vim.o.smartcase = true
 vim.o.showbreak="<b> "
--- vim.o.background = "dark"
-
 
 -- local to window
 vim.wo.number = true
 vim.wo.relativenumber = true
-vim.wo.wrap = false
+vim.wo.wrap = true
 vim.wo.colorcolumn = "90"
 vim.wo.signcolumn = "yes"
 
@@ -32,9 +30,6 @@ vim.bo.tabstop = 2
 vim.bo.expandtab = true
 vim.bo.smartindent = true
 
--- other
-vim.g.rustfmt_autosave = 1
-
 vim.opt.undofile = true
 vim.g.undodir ="~/.cache/nvim/undodir"
 
@@ -42,10 +37,13 @@ require('packer').startup(function()
   -- packer manage itself
   use 'wbthomason/packer.nvim'
 
-  use {"ellisonleao/gruvbox.nvim", requires = {"rktjmp/lush.nvim"}}
+  -- Wallpaper
   use "Shatur/neovim-ayu"
-  use "rebelot/kanagawa.nvim"
   use 'tiagovla/tokyodark.nvim'
+  -- use {"ellisonleao/gruvbox.nvim", requires = {"rktjmp/lush.nvim"}}
+  -- use "rebelot/kanagawa.nvim"
+
+  use 'kyazdani42/nvim-web-devicons'
   -- use 'flazz/vim-colorschemes'            
   use {
     'glepnir/galaxyline.nvim',
@@ -58,11 +56,12 @@ require('packer').startup(function()
 
   use 'vimwiki/vimwiki'
 
-  -- language
+  -- Languages
   use 'fatih/vim-go'
   use 'mxw/vim-jsx'
-  use 'rust-lang/rust.vim'
+  -- use 'rust-lang/rust.vim'
   -- use 'pangloss/vim-javascript'
+  use 'simrat39/rust-tools.nvim'
 
   -- LSP
   use 'neovim/nvim-lspconfig'    -- Collection of configurations for built-in LSP client
@@ -84,18 +83,22 @@ require('packer').startup(function()
   use 'nvim-treesitter/playground'
   use 'nvim-treesitter/nvim-treesitter-textobjects'
 
-  -- utils 
+  -- Utils 
+  -- plugins from the saint TPOPE
   use 'tpope/vim-surround'
-  use 'tpope/vim-commentary'
-  use 'tpope/vim-fugitive' -- git    features
-  use 'tpope/vim-rhubarb'  -- github feature for gitfugitive
-  use 'norcalli/nvim-colorizer.lua'
-  use 'mbbill/undotree'
+  use 'tpope/vim-commentary' -- comment features
+  use 'tpope/vim-fugitive'   -- git features
+  use 'tpope/vim-rhubarb'    -- github feature for gitfugitive
+  use 'ggandor/leap.nvim' 
   use 'unblevable/quick-scope'
   use 'junegunn/vim-easy-align'
+  use 'norcalli/nvim-colorizer.lua'
+  use 'mbbill/undotree'
   use ({ 'goolord/alpha-nvim',
     requires = { 'kyazdani42/nvim-web-devicons' },
   })
+  use {"andymass/vim-matchup", event = "BufRead"}
+  use 'vuciv/vim-bujo' -- take notes
 
   -- Telescope
   use ({ 
@@ -110,10 +113,6 @@ require('packer').startup(function()
 
   -- Other
   use 'ThePrimeagen/harpoon' 
-  use {
-    "andymass/vim-matchup",
-    event = "BufRead"
-  }
 
   use 'lewis6991/impatient.nvim'
   use {
@@ -128,186 +127,86 @@ require('packer').startup(function()
     end
   }
 
-  -- useful
-  -- use 'junegunn/goyo.vim'
-  use 'vuciv/vim-bujo'
 
-
-  -- ascii drawing
-  use "jbyuki/venn.nvim"
-  -- silicon 
-  use "segeljakt/vim-silicon"
-
-  use "rcarriga/nvim-notify"
-
+  -- use "rcarriga/nvim-notify"
+  use "jbyuki/venn.nvim"      -- ascii drawing
+  use "segeljakt/vim-silicon" -- silicon carbon.sh like feature
   use({ "yioneko/nvim-yati", requires = "nvim-treesitter/nvim-treesitter" })
+  use { 'lewis6991/gitsigns.nvim', config = function() 
+      require('gitsigns').setup() end
+  }
 end)
 
 -- aliases
 local cmd = vim.cmd
 
--- colorscheme
-vim.cmd("colorscheme kanagawa")
+cmd 'colorscheme ayu-dark'
 cmd 'highlight colorcolumn guibg=#ff7986'
 
 -- plugin configuration
-require('colorizer').setup()
-
 require('telescope-config')
 require('vimwiki-config')
 require('autocompletion-config')
 require('treesitter-config')
 require('alpha-config')
 require('file-explorer-config')
+require('keymaps') -- keymaps
 
--- keymaps
-require('keymaps')
-
+-- plugin setup
+require('colorizer').setup()
+require('leap').add_default_mappings()
 require("nvim-treesitter.configs").setup {
   yati = { enable = true },
 }
 
--- local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
--- for type, icon in pairs(signs) do
---   local hl = "DiagnosticSign" .. type
---   vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
--- end
-
-
--- if vim.loop.os_uname().sysname == 'Linux'
+-- RUST-TOOLS
+--
+local opts = {
+  tools = { 
+    autoSetHints = true,
+    inlay_hints = {
+      show_parameter_hints = false,
+      parameter_hints_prefix = "",
+      other_hints_prefix = "",
+    },
+  },
+  server = {
+    settings = {
+      ["rust-analyzer"] = {
+	-- enable clippy on save
+	checkOnSave = {
+	  command = "clippy"
+	},
+      }
+    }
+  },
+}
+require('rust-tools').setup(opts)
 
 -- cmd 'source ~/.config/nvim/utils.vim'
 
-
--- local files = {
---   python = "python3 -i " .. exp("%:t"),
---   lua = "lua " .. exp("%:t"),
---   c = "gcc -o temp " .. exp("%:t") .. " && ./temp && rm ./temp",
---   cpp = "clang++ -o temp " .. exp("%:t") .. " && ./temp && rm ./temp",
---   java = "javac " .. exp("%:t") .. " && java " .. exp("%:t:r") .. " && rm *.class",
---   rust = "cargo run",
---   javascript = "node " .. exp("%:t"),
---   typescript = "tsc " .. exp("%:t") .. " && node " .. exp("%:t:r") .. ".js",
--- }
--- function Run_file()
---   local command = files[vim.bo.filetype]
---   if command ~= nil then
---     Open_term:new({ cmd = command, close_on_exit = false }):toggle()
---     print("Running: " .. command)
---   end
--- end
+--- ASCII DRAWING PLUGIN
 --
-
 -- venn.nvim: enable or disable keymappings
+--
 function _G.Toggle_venn()
-    local venn_enabled = vim.inspect(vim.b.venn_enabled)
-    if venn_enabled == "nil" then
-        vim.b.venn_enabled = true
-        vim.cmd[[setlocal ve=all]]
-        -- draw a line on HJKL keystokes
-        vim.api.nvim_buf_set_keymap(0, "n", "J", "<C-v>j:VBox<CR>", {noremap = true})
-        vim.api.nvim_buf_set_keymap(0, "n", "K", "<C-v>k:VBox<CR>", {noremap = true})
-        vim.api.nvim_buf_set_keymap(0, "n", "L", "<C-v>l:VBox<CR>", {noremap = true})
-        vim.api.nvim_buf_set_keymap(0, "n", "H", "<C-v>h:VBox<CR>", {noremap = true})
-        -- draw a box by pressing "f" with visual selection
-        vim.api.nvim_buf_set_keymap(0, "v", "f", ":VBox<CR>", {noremap = true})
-    else
-        vim.cmd[[setlocal ve=]]
-        vim.cmd[[mapclear <buffer>]]
-        vim.b.venn_enabled = nil
-    end
+  local venn_enabled = vim.inspect(vim.b.venn_enabled)
+  if venn_enabled == "nil" then
+    vim.b.venn_enabled = true
+    vim.cmd[[setlocal ve=all]]
+    -- draw a line on HJKL keystokes
+    vim.api.nvim_buf_set_keymap(0, "n", "J", "<C-v>j:VBox<CR>", {noremap = true})
+    vim.api.nvim_buf_set_keymap(0, "n", "K", "<C-v>k:VBox<CR>", {noremap = true})
+    vim.api.nvim_buf_set_keymap(0, "n", "L", "<C-v>l:VBox<CR>", {noremap = true})
+    vim.api.nvim_buf_set_keymap(0, "n", "H", "<C-v>h:VBox<CR>", {noremap = true})
+    -- draw a box by pressing "f" with visual selection
+    vim.api.nvim_buf_set_keymap(0, "v", "f", ":VBox<CR>", {noremap = true})
+  else
+    vim.cmd[[setlocal ve=]]
+    vim.cmd[[mapclear <buffer>]]
+    vim.b.venn_enabled = nil
+  end
 end
--- toggle keymappings for venn using <leader>v
+
 vim.api.nvim_set_keymap('n', '<leader>v', ":lua Toggle_venn()<CR>", { noremap = true})
 
-
-
--- vim.notify = require("notify")
--- local client_notifs = {}
-
--- local spinner_frames = {'⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏'}
-
--- local function update_spinner(client_id, token)
---   local notif_data = client_notifs[client_id][token]
-
---   if notif_data and notif_data.spinner then
---     local new_spinner = (notif_data.spinner + 1) % #spinner_frames
-
---     local new_notif = vim.notify(nil, nil, {
---       hidden = true,
---       icon = spinner_frames[new_spinner],
---       replace = notif_data.notification,
---     })
-
---     client_notifs[client_id][token] = {
---       notification = new_notif,
---       spinner = new_spinner,
---     }
-
---     vim.defer_fn(function()
---       update_spinner(client_id, token)
---     end, 100)
---   end
--- end
-
--- local function format_title(title, client)
---   return client.name .. (#title > 0 and ": " .. title or "")
--- end
-
--- local function format_message(message, percentage)
---   return (percentage and percentage .. "%\t" or "") .. (message or "")
--- end
-
--- vim.lsp.handlers["$/progress"] = function(_, result, ctx)
---   local client_id = ctx.client_id
-
---   local val = result.value
-
---   if not val.kind then
---     return
---   end
---   if not client_notifs[client_id] then
---     client_notifs[client_id] = {}
---   end
-
---   local notif_data = client_notifs[client_id][result.token]
-
---   if val.kind == "begin" then
---     local message = format_message(val.message, val.percentage)
-
---     local notification = vim.notify(message, "info", {
---       title = format_title(val.title, vim.lsp.get_client_by_id(client_id)),
---       icon = spinner_frames[1],
---       timeout = false,
---       hidden = false,
---     })
-
---     client_notifs[client_id][result.token] = {
---       notification = notification,
---       spinner = 1,
---     }
-
---     update_spinner(client_id, result.token)
---   elseif val.kind == "report" and notif_data then
---     local new_notif = vim.notify(format_message(val.message, val.percentage), "info", {
---       replace = notif_data.notification,
---       hidden = false,
---     })
-
---     client_notifs[client_id][result.token] = {
---       notification = new_notif,
---       spinner = notif_data.spinner,
---     }
---   elseif val.kind == "end" and notif_data then
---     local new_notif =
---       vim.notify(val.message and format_message(val.message) or "Complete", "info", {
---         icon = "",
---         replace = notif_data.notification,
---         timeout = 3000,
---       })
-
---     client_notifs[client_id][result.token] = {
---       notification = new_notif,
---     }
---   end
--- end

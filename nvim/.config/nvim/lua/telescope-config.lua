@@ -1,15 +1,24 @@
 -- telescope
-require('telescope').load_extension('project')
 require('telescope').setup({
   extensions = {
     project = {
       base_dirs = {
-        '~/Desktop/project',
+        {path = "~/Desktop/project"},
       },
-      hidden_files = false -- default: false
+      hidden_files = false, -- default: false
+      themes = "dropdown"
+    },
+    ["ui-select"] = {
+      require("telescope.themes").get_dropdown {
+        -- even more opts
+      }
     }
   }
 })
+
+-- require("telescope").load_extension("file_browser")
+-- require('telescope').load_extension('project')
+-- require("telescope").load_extension("ui-select")
 
 -- local M = {}
 

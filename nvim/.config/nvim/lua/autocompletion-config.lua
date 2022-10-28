@@ -2,11 +2,11 @@
 -- Lsp
 -- ------------------------------------------------------------------------
 local lspconfig = require("lspconfig")
-local null_ls = require("null-ls")
+-- local null_ls = require("null-ls")
 
 -- Add additional capabilities supported by nvim-cmp
 local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
 local bufnr_map=vim.api.nvim_buf_set_keymap
 local on_attach =function(client, bufrn)
@@ -23,7 +23,8 @@ local on_attach =function(client, bufrn)
   bufnr_map(bufnr, 'n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
   bufnr_map(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
   -- bufnr_map(bufnr, 'n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-	bufnr_map(bufnr, 'n', 'ca','<cmd>Telescope lsp_code_actions<CR>', opts)
+	map('n', 'ca','<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+	-- bufnr_map(bufnr, 'n', 'ca','<cmd>Telescope lsp_code_actions<CR>', opts)
   bufnr_map(bufnr, 'n', '<leader>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
   bufnr_map(bufnr, 'n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
   bufnr_map(bufnr, 'n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
@@ -31,6 +32,45 @@ local on_attach =function(client, bufrn)
   bufnr_map(bufnr, 'n', '<leader>so', [[<cmd>lua require('telescope.builtin').lsp_document_symbols()<CR>]], opts)
   bufnr_map(bufnr, 'n', '<leader>vf','<cmd>lua vim.lsp.buf.formatting()<CR>',opts)
   vim.cmd [[ command! Format execute 'lua vim.lsp.buf.formatting()' ]]
+
+  if client.resolved_capabilities.document_formatting then
+    vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()")
+  end
+  -- Diagnostic
+  -- bufnr_map(bufnr, n','<leader>ve','<cmd>lua vim.lsp.diagnostic.show_line_diagnostics({ border = "rounded" })<CR>',opts)
+  -- bufnr_map(bufnr, n','<leader>vn','<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>',opts)
+  -- bufnr_map(bufnr, n','<leader>vp','<cmd>lua vim.lsp.diagnostic.goto_next()<CR>',opts)
+  -- bufnr_map(bufnr, n','<leader>vq','<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>',opts)
+end
+
+local on_attach_rust =function(client, bufrn)
+  require'rust-tools'.hover_actions.hover_actions()
+  local map = vim.api.nvim_set_keymap 
+  local opts = { noremap = true, silent = true }
+  map('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+  map('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
+  map('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+  map('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+  map('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+  map('n', '<leader>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
+  map('n', '<leader>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
+  map('n', '<leader>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
+  map('n', '<leader>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+  map('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+  map('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+  -- bufnr_map(bufnr, 'n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+	map('n', 'ca','<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+  map('n', '<leader>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
+  map('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
+  map('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
+  map('n', '<leader>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
+  map('n', '<leader>so', [[<cmd>lua require('telescope.builtin').lsp_document_symbols()<CR>]], opts)
+  map('n', '<leader>vf','<cmd>lua vim.lsp.buf.formatting()<CR>',opts)
+  vim.cmd [[ command! Format execute 'lua vim.lsp.buf.formatting()' ]]
+
+  map('n', '<leader>oc','<cmd>RustOpenCargo<CR>',opts)
+  map('n', '<leader>rr','<cmd>RustRunnables<CR>',opts)
+  map('n', '<leader>rp','<cmd>RustParentModule<CR>',opts)
 
   if client.resolved_capabilities.document_formatting then
     vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()")
@@ -84,33 +124,91 @@ lspconfig.tsserver.setup({
     end,
 })
 
-null_ls.setup({
-    sources = {
-        null_ls.builtins.diagnostics.eslint,
-        null_ls.builtins.code_actions.eslint,
-        null_ls.builtins.formatting.prettier,
-	null_ls.builtins.completion.spell,
-    },
-    on_attach = on_attach,
-})
+-- null_ls.setup({
+--     sources = {
+--         null_ls.builtins.diagnostics.eslint,
+--         null_ls.builtins.code_actions.eslint,
+--         null_ls.builtins.formatting.prettier,
+--     },
+--     on_attach = on_attach,
+-- })
 
-lspconfig.rust_analyzer.setup({
-    on_attach=on_attach,
+
+
+local opts = {
+  tools = { -- rust-tools options
+    autoSetHints = true,
+      inlay_hints = {
+      -- Only show inlay hints for the current line
+      only_current_line = true,
+      -- Event which triggers a refersh of the inlay hints.
+      -- You can make this "CursorMoved" or "CursorMoved,CursorMovedI" but
+      -- not that this may cause higher CPU usage.
+      -- This option is only respected when only_current_line and
+      -- autoSetHints both are true.
+      only_current_line_autocmd = "CursorHold",
+      -- whether to show parameter hints with the inlay hints or not
+      -- default: true
+      show_parameter_hints = true,
+      -- whether to show variable name before type hints with the inlay hints or not
+      -- default: false
+      show_variable_name = false,
+      -- prefix for parameter hints
+      -- default: "<-"
+      parameter_hints_prefix = "<- ",
+      -- prefix for all the other hints (type, chaining)
+      -- default: "=>"
+      other_hints_prefix = "=> ",
+      -- whether to align to the lenght of the longest line in the file
+      max_len_align = false,
+      -- padding from the left if max_len_align is true
+      max_len_align_padding = 1,
+      -- whether to align to the extreme right or not
+      right_align = false,
+      -- padding from the right if right_align is true
+      right_align_padding = 7,
+      -- The color of the hints
+      highlight = "Comment",
+    },
+  },
+  -- all the opts to send to nvim-lspconfig
+  -- these override the defaults set by rust-tools.nvim
+  -- see https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#rust_analyzer
+  server = {
+    -- on_attach is a callback called when the language server attachs to the buffer
+    standalone = false,	
+    on_attach = on_attach_rust,
     settings = {
-        ["rust-analyzer"] = {
-            assist = {
-                importGranularity = "module",
-                importPrefix = "by_self",
-            },
-            cargo = {
-                loadOutDirsFromCheck = true
-            },
-            procMacro = {
-                enable = true
-            },
-        }
+      -- to enable rust-analyzer settings visit:
+      -- https://github.com/rust-analyzer/rust-analyzer/blob/master/docs/user/generated_config.adoc
+      ["rust-analyzer"] = {
+        -- enable clippy on save
+        checkOnSave = {
+          command = "clippy"
+        },
+      }
     }
-})
+  },
+}
+require('rust-tools').setup(opts)
+
+-- lspconfig.rust_analyzer.setup({
+--     on_attach=on_attach,
+--     settings = {
+--         ["rust-analyzer"] = {
+--             assist = {
+--                 importGranularity = "module",
+--                 importPrefix = "by_self",
+--             },
+--             cargo = {
+--                 loadOutDirsFromCheck = true
+--             },
+--             procMacro = {
+--                 enable = true
+--             },
+--         }
+--     }
+-- })
 
 local workspace_dir = vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t')
 local workdir = vim.fn.getcwd()
