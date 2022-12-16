@@ -22,9 +22,9 @@ map('n','<C-k>','<C-w>k', opts)
 map('n','<C-l>','<C-w>l', opts)
 
 -- BLANK Copy and delete
-map('v','<leader>p','_dP', opts)
-map('v','<leader>d','_d', opts)
-map('n','<leader>d','_d', opts)
+map('v','<leader>p','"_dP', opts)
+map('v','<leader>d','"_d', opts)
+map('n','<leader>d','"_d', opts)
 
 -- Clipboard
 map('n','<leader>y','"+y', opts)
