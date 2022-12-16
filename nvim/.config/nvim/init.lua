@@ -151,6 +151,7 @@ require('treesitter-config')
 require('alpha-config')
 require('file-explorer-config')
 require('keymaps') -- keymaps
+require('harpoon_config') -- harpoon
 
 -- plugin setup
 require('colorizer').setup()

@@ -9,7 +9,7 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
 local bufnr_map=vim.api.nvim_buf_set_keymap
-local on_attach =function(client, bufrn)
+local on_attach=function(client, bufrn)
   local opts = { noremap = true, silent = true }
   bufnr_map(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
   bufnr_map(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)

@@ -97,31 +97,6 @@ map('n','<leader>fj',"<cmd>Telescope<CR>", {noremap = true, silent = true})
 map('n','<leader>fp',"<cmd>lua require'telescope'.extensions.project.project{}<CR>", {noremap = true, silent = true})
 map('n','ca','<cmd>Telescope lsp_code_actions<CR>', { noremap = false, silent= true})
 
--- Harpoon shortcut to commands
-map('n','<M-1>','<cmd>lua require("harpoon.term").sendCommand(1, 1)<CR> <bar> <cmd>lua require("harpoon.term").gotoTerminal(1)<CR>i<CR>', opts)
-map('n','<M-2>','<cmd>lua require("harpoon.term").sendCommand(1, 2)<CR> <bar> <cmd>lua require("harpoon.term").gotoTerminal(1)<CR>i<CR>', opts)
-map('n','<M-3>','<cmd>lua require("harpoon.term").sendCommand(1, 3)<CR> <bar> <cmd>lua require("harpoon.term").gotoTerminal(1)<CR>i<CR>', opts)
-map('n','<M-4>','<cmd>lua require("harpoon.term").sendCommand(1, 4)<CR> <bar> <cmd>lua require("harpoon.term").gotoTerminal(1)<CR>i<CR>', opts)
-map('n','<M-5>','<cmd>lua require("harpoon.term").sendCommand(1, 6)<CR> <bar> <cmd>lua require("harpoon.term").gotoTerminal(1)<CR>i<CR>', opts)
-map('n','<M-6>','<cmd>lua require("harpoon.term").sendCommand(1, 7)<CR> <bar> <cmd>lua require("harpoon.term").gotoTerminal(1)<CR>i<CR>', opts)
-map('n','<M-7>','<cmd>lua require("harpoon.term").sendCommand(1, 8)<CR> <bar> <cmd>lua require("harpoon.term").gotoTerminal(1)<CR>i<CR>', opts)
-
--- Harpoon toggle menu
-map('n','<leader>mv','<cmd>lua require("harpoon.ui").toggle_quick_menu()<CR>', opts) -- mv for move to overview
-map('n','<leader>hc','<cmd>lua require("harpoon.cmd-ui").toggle_quick_menu()<CR>', opts)
-map('n','<leader>hf','<cmd>lua require("harpoon.ui").toggle_quick_menu()<CR>', opts)
-
--- Harpoon go to terminal one
-map('n','<leader>ht','<cmd>lua require("harpoon.term").gotoTerminal(1)<CR>i<CR>', opts)
-
--- Harpoon navigates to next/previous mark
-map('n','<leader>hn','<cmd>lua require("harpoon.ui").nav_next()<CR>',opts)
-map('n','<leader>hb','<cmd>lua require("harpoon.ui").nav_prev()<CR>',opts)   
-
--- Harpoon add/delete mark
-map('n', '<leader>mm', '<cmd>lua require("harpoon.mark").add_file()<CR>', opts) -- mm means fast adding files to belly
-map('n', '<leader>mc', '<cmd>lua require("harpoon.mark").clear_all()<CR>', opts) -- mc means fast puking away files
-
 -- Quicklist next/prev
 map('n','<C-n>','<cmd>cnext<CR>',opts)
 map('n','<C-p>','<cmd>cprev<CR>',opts)
