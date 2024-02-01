@@ -4,7 +4,7 @@
 
 # .dotfiles
 
-![main-monitor](images/screenshot-2.png)  
+![main-monitor](images/screenshot-1.png)  
 
 Configuration are available for: 
 
