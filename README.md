@@ -4,10 +4,7 @@
 
 # .dotfiles
 
-*screenshots with pfetch, ncmpcpp and ranger*  
 ![main-monitor](images/screenshot-2.png)  
-![second-monitor](images/screenshot-1.png)  
-
 
 Configuration are available for: 
 
@@ -21,25 +18,7 @@ Configuration are available for:
 - dunst
 - sxiv
 
-
-<details open>
-<summary>readline</summary>
-<br>
-
-![redline-demo](demo/readline.gif)
-
-</details>
-
-<details open>
-<summary>ncmpcpp</summary>
-<br>
-
-![ncmpcpp-screenshot](images/ncmpcpp.png)  
-![ncmpcpp-demo](demo/ncmpcpp2.gif)
-</details>
-
-
-<details open>
+<details close>
 <summary>Polybar</summary>
 <br>
 
@@ -50,7 +29,7 @@ second monitor:
 </details>
 
 
-<details open>
+<details close>
 <summary>sxiv</summary>
 <br>
 
