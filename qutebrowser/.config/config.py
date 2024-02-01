@@ -145,7 +145,7 @@ config.bind('xx', 'config-cycle statusbar.show always never;; config-cycle tabs.
 #config.bind('xd', 'config-cycle colors.webpage.darkmode.enabled;; restart')
 
 # Default home page
-c.url.default_page = 'file:///home/rikishi/.config/html/homepage.html'
+c.url.default_page = 'file:///__HOMEPATH__/.config/html/homepage.html'
 
 #****** YOUTUBE ADD BLOCKING
 def filter_yt(info: interceptor.Request):

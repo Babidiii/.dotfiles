@@ -1,6 +1,7 @@
 #!/usr/bin/env sh
 
-none_images=$(podman image ls -a  | awk -F " " '/<none>/{print $3}')
+none_images="$(podman image ls -a  | awk -F " " '/<none>/{print $3}'"
+
 
 echo $(none_images)
 podman rmi ${none_images}

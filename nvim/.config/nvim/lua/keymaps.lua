@@ -2,12 +2,9 @@
 -- aliases
 -- vim.api.nvim.set_keymap({mode}, {keymap}, {mapped_to}, {options})
 local map = vim.api.nvim_set_keymap 
+
 local opts = { noremap = true}
 
--- Leader key
-vim.api.nvim_set_keymap('', '<Space>', '<Nop>', { noremap = true, silent = true })
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
 
 -- No arrow keys
 map('n','<Up>','<Nop>', opts)
@@ -22,9 +19,9 @@ map('n','<C-k>','<C-w>k', opts)
 map('n','<C-l>','<C-w>l', opts)
 
 -- BLANK Copy and delete
-map('v','<leader>p','"_dP', opts)
-map('v','<leader>d','"_d', opts)
-map('n','<leader>d','"_d', opts)
+map('v','<leader>p','_dP', opts)
+map('v','<leader>d','_d', opts)
+map('n','<leader>d','_d', opts)
 
 -- Clipboard
 map('n','<leader>y','"+y', opts)
@@ -64,7 +61,9 @@ map('n','<leader>j','<cmd>m .+1<CR>==', opts)
 map('n','<leader>k','<cmd>m .-2<CR>==', opts)
 
 -- Cargo
-map('n','<leader>cc','<cmd>Cargo clippy<CR>', opts)
+-- map('n','<leader>cc','<cmd>Cargo clippy<CR>', opts)
+map('n','<leader>cf','<cmd>Telescope rust_cfg features<CR>', opts)
+map('n','<leader>ct','<cmd>Telescope rust_cfg targets<CR>', opts)
 map('n','<leader>cr','<cmd>Cargo run<CR>', opts)
 
 -- Git Fugitive
@@ -84,18 +83,23 @@ map('t','<M-l>','<c-\\><c-n><c-w>l', opts)
 map('x', 'ga', '<Plug>(EasyAlign)',{})
 map('n', 'ga', '<Plug>(EasyAlign)',{})
 
+map('n', '<leader>bd', '<cmd>%bd<cr><C-O>:bd#<cr>',{})
+
 -- Telescope
 map('n','<leader>ff','<cmd>Telescope find_files<cr>',opts)
 map('n','<leader>fg','<cmd>Telescope live_grep<cr>',opts)
 map('n','<leader>fs','<cmd>Telescope git_branches<cr>',opts)
-map('n','<leader>fb','<cmd>Telescope buffers<cr>',opts)
+-- map('n','<leader>fb','<cmd>Telescope buffers<cr>',opts)
+map('n', '<leader>fb', "<cmd>lua require'telescope-buffer'.buffers()<cr>", opts)
 map('n','<leader>fh','<cmd>Telescope help_tags<cr>',opts)
 map('n','<leader>fl','<cmd>Telescope loclist<cr>',opts)
 map('n','<leader>fc','<cmd>Telescope quickfix<cr>',opts)
 map('n','<leader>fu','<cmd>Telescope git_files<cr>',opts)
 map('n','<leader>fj',"<cmd>Telescope<CR>", {noremap = true, silent = true})
 map('n','<leader>fp',"<cmd>lua require'telescope'.extensions.project.project{}<CR>", {noremap = true, silent = true})
-map('n','ca','<cmd>Telescope lsp_code_actions<CR>', { noremap = false, silent= true})
+-- map('n','ca','<cmd>Telescope lsp_code_actions<CR>', { noremap = false, silent= true})
+-- map('n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+map('n', '<leader>ca', '<cmd>CodeActionMenu<CR>', opts)
 
 -- Quicklist next/prev
 map('n','<C-n>','<cmd>cnext<CR>',opts)
@@ -104,10 +108,32 @@ map('n','<C-p>','<cmd>cprev<CR>',opts)
 -- TrueZen
 map('n','<leader>tz','<cmd>TZAtaraxis<CR>',opts)
 
-
-
 map('n','<Leader>tu', '<Plug>BujoChecknormal', opts)
 map('n','<Leader>th', '<Plug>BujoAddnormal', opts)
 -- let g:bujo#todo_file_path = $HOME . "/.cache/bujo"
 -- let g:bujo#window_width = 60
 
+
+-- Fix common typos
+vim.cmd([[
+    cnoreabbrev W! w!
+    cnoreabbrev W1 w!
+    cnoreabbrev w1 w!
+    cnoreabbrev Q! q!
+    cnoreabbrev Q1 q!
+    cnoreabbrev q1 q!
+    cnoreabbrev Qa! qa!
+    cnoreabbrev Qall! qall!
+    cnoreabbrev Wa wa
+    cnoreabbrev Wq wq
+    cnoreabbrev wQ wq
+    cnoreabbrev WQ wq
+    cnoreabbrev wq1 wq!
+    cnoreabbrev Wq1 wq!
+    cnoreabbrev wQ1 wq!
+    cnoreabbrev WQ1 wq!
+    cnoreabbrev W w
+    cnoreabbrev Q q
+    cnoreabbrev Qa qa
+    cnoreabbrev Qall qall
+]])

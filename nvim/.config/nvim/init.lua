@@ -1,8 +1,3 @@
--- options configuration
---   vim.o  -> global options
---   vom.wo -> local to window
---   vom.bo -> local to buffer
-
 -- global
 vim.o.hidden = true
 vim.o.errorbells = false
@@ -15,12 +10,13 @@ vim.o.guicursor = ""
 vim.o.scrolloff = 8
 vim.o.smartcase = true
 vim.o.showbreak="<b> "
+vim.o.title= true
 
 -- local to window
 vim.wo.number = true
 vim.wo.relativenumber = true
 vim.wo.wrap = true
-vim.wo.colorcolumn = "90"
+-- vim.wo.colorcolumn = "90"
 vim.wo.signcolumn = "yes"
 
 -- local to buffer
@@ -33,181 +29,175 @@ vim.bo.smartindent = true
 vim.opt.undofile = true
 vim.g.undodir ="~/.cache/nvim/undodir"
 
-require('packer').startup(function()
-  -- packer manage itself
-  use 'wbthomason/packer.nvim'
+-----------------------------------------------------------------------------------
+-- Packer
+-----------------------------------------------------------------------------------
+local ensure_lazy_packer = function()
+  local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+  if not vim.loop.fs_stat(lazypath) then
+    vim.fn.system({
+      "git",
+      "clone",
+      "--filter=blob:none",
+      "https://github.com/folke/lazy.nvim.git",
+      "--branch=stable", -- latest stable release
+      lazypath,
+    })
+  end
+  vim.opt.rtp:prepend(lazypath)
+end
 
-  -- Wallpaper
-  use "Shatur/neovim-ayu"
-  use 'tiagovla/tokyodark.nvim'
-  -- use {"ellisonleao/gruvbox.nvim", requires = {"rktjmp/lush.nvim"}}
-  -- use "rebelot/kanagawa.nvim"
+ensure_lazy_packer()
 
-  use 'kyazdani42/nvim-web-devicons'
-  -- use 'flazz/vim-colorschemes'            
-  use {
-    'glepnir/galaxyline.nvim',
-    branch = 'main',
-    -- your statusline
-    config = function() require('statusline-config') end,
-    -- some optional icons
-    requires = {'kyazdani42/nvim-web-devicons', opt = true}
-  }
+-- [ Leader key ]
+vim.api.nvim_set_keymap('', '<Space>', '<Nop>', { noremap = true, silent = true })
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
 
-  use 'vimwiki/vimwiki'
-
-  -- Languages
-  use 'fatih/vim-go'
-  use 'mxw/vim-jsx'
-  -- use 'rust-lang/rust.vim'
-  -- use 'pangloss/vim-javascript'
-  use 'simrat39/rust-tools.nvim'
-
-  -- LSP
-  use 'neovim/nvim-lspconfig'    -- Collection of configurations for built-in LSP client
-  use 'hrsh7th/nvim-cmp'         -- Autocompletion plugin
-  use 'hrsh7th/cmp-nvim-lsp'     -- LSP source for nvim-cmp
-  use 'saadparwaiz1/cmp_luasnip' -- Snippets source for nvim-cmp
-  use 'L3MON4D3/LuaSnip'         -- Snippets plugin
-  use "rafamadriz/friendly-snippets"
-
-  -- TS/JS
-  use "jose-elias-alvarez/null-ls.nvim"
-  use "jose-elias-alvarez/nvim-lsp-ts-utils"
-
-  -- Treesitter
-  use {
-    'nvim-treesitter/nvim-treesitter',
-    run = ':TSUpdate'
-  }
-  use 'nvim-treesitter/playground'
-  use 'nvim-treesitter/nvim-treesitter-textobjects'
-
-  -- Utils 
-  -- plugins from the saint TPOPE
-  use 'tpope/vim-surround'
-  use 'tpope/vim-commentary' -- comment features
-  use 'tpope/vim-fugitive'   -- git features
-  use 'tpope/vim-rhubarb'    -- github feature for gitfugitive
-  use 'ggandor/leap.nvim' 
-  use 'unblevable/quick-scope'
-  use 'junegunn/vim-easy-align'
-  use 'norcalli/nvim-colorizer.lua'
-  use 'mbbill/undotree'
-  use ({ 'goolord/alpha-nvim',
-    requires = { 'kyazdani42/nvim-web-devicons' },
-  })
-  use {"andymass/vim-matchup", event = "BufRead"}
-  use 'vuciv/vim-bujo' -- take notes
-
-  -- Telescope
-  use ({ 
-    'nvim-telescope/telescope.nvim',
-    requires = {'nvim-lua/popup.nvim', 'nvim-lua/plenary.nvim'},
-  })
-  use 'nvim-telescope/telescope-project.nvim'
-
-  -- File explorer
-  use 'tamago324/lir.nvim'
-  use 'nvim-lua/plenary.nvim'
-
-  -- Other
-  use 'ThePrimeagen/harpoon' 
-
-  use 'lewis6991/impatient.nvim'
-  use {
-    "Pocco81/TrueZen.nvim",
-    cmd = {
-      "TZFocus",
-      "TZAtaraxis",
-      "TZMinimalist",
-    },
-    setup = function()
-      require("truezen-config")
-    end
-  }
+require("lazy").setup("plugins");
 
 
-  -- use "rcarriga/nvim-notify"
-  use "jbyuki/venn.nvim"      -- ascii drawing
-  use "segeljakt/vim-silicon" -- silicon carbon.sh like feature
-  use({ "yioneko/nvim-yati", requires = "nvim-treesitter/nvim-treesitter" })
-  use { 'lewis6991/gitsigns.nvim', config = function() 
-      require('gitsigns').setup() end
-  }
-end)
+-- require("packer").startup(function()
+--   use "lewis6991/impatient.nvim"
+
+--   -- Colorscheme
+--   use "Shatur/neovim-ayu"
+--   use "tiagovla/tokyodark.nvim"
+--   use "rebelot/kanagawa.nvim"
+
+--   use "tamago324/lir.nvim" -- file explorer
+
+-- 	use 'folke/trouble.nvim' -- Summarizes issues
+-- 	use "kyazdani42/nvim-web-devicons"
+-- 	use {
+-- 		'nvim-lualine/lualine.nvim',
+-- 		requires = { 'nvim-tree/nvim-web-devicons', opt = true }
+-- 	}
+-- 	use 'arkav/lualine-lsp-progress'
+--   -- use {
+--   --   "glepnir/galaxyline.nvim",
+--   --   branch = "main",
+--   --   config = function() require("statusline-config") end,
+--   --   requires = {"kyazdani42/nvim-web-devicons", opt = true}
+--   -- }
+--   use ({ "goolord/alpha-nvim",
+--     requires = { "kyazdani42/nvim-web-devicons" },
+--   })
+
+--   -- LSP & Snippets
+--   use "neovim/nvim-lspconfig"    -- Collection of configurations for built-in LSP client
+--   use "hrsh7th/nvim-cmp"         -- Autocompletion plugin
+--   use "hrsh7th/cmp-nvim-lsp"     -- LSP source for nvim-cmp
+--   use "saadparwaiz1/cmp_luasnip" -- Snippets source for nvim-cmp
+--   use "L3MON4D3/LuaSnip"         -- Snippets plugin
+--   use "rafamadriz/friendly-snippets"
+
+-- 	use({
+-- 		'weilbith/nvim-code-action-menu',
+-- 		cmd = 'CodeActionMenu',
+-- 	})
+
+--   -- Treesitter
+--   use {
+--     "nvim-treesitter/nvim-treesitter",
+--     run = ":TSUpdate"
+--   }
+--   use "nvim-treesitter/playground"
+--   use "nvim-treesitter/nvim-treesitter-textobjects"
+
+--   -- TPOPE plugins
+--   use "tpope/vim-commentary" -- comment features
+--   use "tpope/vim-fugitive"   -- git features
+--   use "tpope/vim-rhubarb"    -- github feature for gitfugitive
+--   -- use "tpope/vim-surround"
+
+--   -- Utils
+--   use "mbbill/undotree"
+--   use "unblevable/quick-scope" 
+--   use "machakann/vim-sandwich" -- alt for vim-surround
+--   use "junegunn/vim-easy-align"
+--   use "norcalli/nvim-colorizer.lua"
+--   use {"andymass/vim-matchup", event = "BufRead"} -- extends vim's %
+--   use "vimwiki/vimwiki"				  
+--   use "vuciv/vim-bujo"         			  -- take notes
+--   use "jbyuki/venn.nvim"       			  -- ascii drawing
+--   use "segeljakt/vim-silicon"  			  -- silicon carbon.sh like feature
+--   use {
+--     "folke/todo-comments.nvim",
+--     requires = "nvim-lua/plenary.nvim",
+-- 		opt=false,
+--     config = function()
+--       require("todo-comments").setup {
+--       }
+--     end
+--   }
+
+--   -- Telescope
+--   use ({ 
+--     "nvim-telescope/telescope.nvim",
+--     requires = {"nvim-lua/popup.nvim", "nvim-lua/plenary.nvim"},
+--   })
+--   -- use "nvim-telescope/telescope-project.nvim" -- project telescope extension
+
+--   -- Other
+--   -- use "rcarriga/nvim-notify" -- notification manager
+--   use "ThePrimeagen/harpoon" 
+--   -- highlight arguments
+--   use { 'm-demare/hlargs.nvim', requires = { 'nvim-treesitter/nvim-treesitter' } }
+--   use({ "yioneko/nvim-yati", requires = "nvim-treesitter/nvim-treesitter" })
+--   use { "lewis6991/gitsigns.nvim", config = function() 
+--       require("gitsigns").setup() end
+--   }
+
+--  use {
+--     'saecki/crates.nvim',
+--     tag = 'v0.3.0',
+--     requires = { 'nvim-lua/plenary.nvim' },
+--     config = function()
+--         require('crates').setup()
+--     end,
+-- }
+--   -- Rust specific
+--   use "simrat39/rust-tools.nvim"
+--   use ({
+--     'babidiii/rust-cfg.nvim',
+--     requires = {
+--       'nvim-telescope/telescope.nvim', 
+--       'nvim-lua/plenary.nvim', 
+--       'simrat39/rust-tools.nvim', 
+--     },
+--     opt = false,
+--     config = function() 
+--       require('telescope').load_extension('rust_cfg') 
+--     end
+--   })
+
+-- end)
+
+-----------------------------------------------------------------------------------
+-- Configuration
+-----------------------------------------------------------------------------------
 
 -- aliases
 local cmd = vim.cmd
 
-cmd 'colorscheme ayu-dark'
-cmd 'highlight colorcolumn guibg=#ff7986'
+cmd "colorscheme kanagawa"
+cmd "highlight colorcolumn guibg=#ff7986"
+cmd "source ~/.config/nvim/utils.vim"
 
 -- plugin configuration
-require('telescope-config')
-require('vimwiki-config')
-require('autocompletion-config')
-require('treesitter-config')
-require('alpha-config')
-require('file-explorer-config')
-require('keymaps') -- keymaps
-require('harpoon_config') -- harpoon
+require("impatient")
 
--- plugin setup
-require('colorizer').setup()
-require('leap').add_default_mappings()
-require("nvim-treesitter.configs").setup {
-  yati = { enable = true },
-}
+-- custom configs
 
--- RUST-TOOLS
---
-local opts = {
-  tools = { 
-    autoSetHints = true,
-    inlay_hints = {
-      show_parameter_hints = false,
-      parameter_hints_prefix = "",
-      other_hints_prefix = "",
-    },
-  },
-  server = {
-    settings = {
-      ["rust-analyzer"] = {
-	-- enable clippy on save
-	checkOnSave = {
-	  command = "clippy"
-	},
-      }
-    }
-  },
-}
-require('rust-tools').setup(opts)
+require("autocompletion-config") -- lsp, snippets
+require("autogroups")
+require("keymaps")               -- keymaps
 
--- cmd 'source ~/.config/nvim/utils.vim'
+-- require("telescope-config")
+require("colorizer").setup()
 
---- ASCII DRAWING PLUGIN
---
--- venn.nvim: enable or disable keymappings
---
-function _G.Toggle_venn()
-  local venn_enabled = vim.inspect(vim.b.venn_enabled)
-  if venn_enabled == "nil" then
-    vim.b.venn_enabled = true
-    vim.cmd[[setlocal ve=all]]
-    -- draw a line on HJKL keystokes
-    vim.api.nvim_buf_set_keymap(0, "n", "J", "<C-v>j:VBox<CR>", {noremap = true})
-    vim.api.nvim_buf_set_keymap(0, "n", "K", "<C-v>k:VBox<CR>", {noremap = true})
-    vim.api.nvim_buf_set_keymap(0, "n", "L", "<C-v>l:VBox<CR>", {noremap = true})
-    vim.api.nvim_buf_set_keymap(0, "n", "H", "<C-v>h:VBox<CR>", {noremap = true})
-    -- draw a box by pressing "f" with visual selection
-    vim.api.nvim_buf_set_keymap(0, "v", "f", ":VBox<CR>", {noremap = true})
-  else
-    vim.cmd[[setlocal ve=]]
-    vim.cmd[[mapclear <buffer>]]
-    vim.b.venn_enabled = nil
-  end
-end
-
-vim.api.nvim_set_keymap('n', '<leader>v', ":lua Toggle_venn()<CR>", { noremap = true})
+vim.g.code_action_menu_show_details = false
+vim.g.code_action_menu_show_diff = false
+vim.g.code_action_menu_show_action_kind = false	
 

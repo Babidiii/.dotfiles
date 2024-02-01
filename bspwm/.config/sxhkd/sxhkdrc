@@ -4,11 +4,12 @@
 
 # terminal emulator
 super + Return
-	st
+  st  
 
 # program launcher
 super + @p
 	dmenu_run
+
 
 # make sxhkd reload its configuration files:
 super + Escape

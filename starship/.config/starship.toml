@@ -1,0 +1,15 @@
+# Which is equivalent to
+add_newline=false
+palette='foo'
+
+[line_break]
+disabled = true
+
+[directory]
+truncate_to_repo=true
+format=' [$path]($style)[$read_only]($read_only_style) '
+style="bold zitf"
+
+[palettes.foo]
+# Define new color
+zitf = '#ffad63'

@@ -4,7 +4,7 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-# alias ls='ls --color=auto'
+alias ls='ls --color=auto'
 # PS1='[\u@\h \W]\$ '
 set -o vi
 
@@ -20,7 +20,6 @@ rightprompt()
     printf "%*s" $COLUMNS "right prompt"
 }
 
-# -> [rikishi@toru ~]$  ($ = red if previous cmd failed)
 # PS1='\[\033[01;36m\][\u@\h\[\033[01;37m\] \W\[\033[01;36m\]]$(if_failed)\$\[\033[00m\] '
 PROMPT_COMMAND='if [ $? = 0 ]; then DOLLAR_COLOR="\033[0m"; else DOLLAR_COLOR="\033[1;31m"; fi'
 PS1='\[\033[01;36m\][\u@\h\[\033[01;37m\] \W\[\033[01;36m\]]\[\033[00m\]\[$(echo -ne $DOLLAR_COLOR)\]$\[\033[m\] '
@@ -37,6 +36,7 @@ export PATH=$PATH:$HOME/.local/bin/status-bar	# status bar bash script
 export PATH=$PATH:$HOME/.local/utils	# utils bash script bin
 
 alias ll="ls -alhF --group-directories-first"
+alias ls='exa'
 
 #----------------------------------------------------------------------------
 # - XDG based dir clean up
@@ -60,10 +60,10 @@ export INPUTRC="$XDG_CONFIG_HOME"/readline/inputrc
 # export WGETRC="$XDG_CONFIG_HOME/wgetrc"
 # alias wget='wget --hsts-file="$XDG_CACHE_HOME/wget-hsts"'
 #---- Rust (rustup, cargo)
-export RUSTUP_HOME="$XDG_DATA_HOME"/rustup    # rustup
-export CARGO_HOME="$XDG_DATA_HOME"/cargo      # cargo
-export PATH=$XDG_DATA_HOME/cargo/bin:$PATH    # update path to fit new dir
-# source "$XDG_DATA_HOME/cargo/env"           # source cargo env
+export RUSTUP_HOME="$XDG_DATA_HOME"/rustup   # rustup
+export CARGO_HOME="$XDG_DATA_HOME"/cargo     # rustup
+# export PATH=$XDG_DATA_HOME/cargo/bin:$PATH # update path to fit new dir
+source "$XDG_DATA_HOME/cargo/env"            # source cargo env
 #---- Golang
 export GOPATH="$XDG_DATA_HOME/go"
 export PATH=$PATH:$XDG_DATA_HOME/go/bin   # Golang local path
@@ -89,7 +89,36 @@ export PATH="$PATH:$HOME/.dotfiles/scripts"
 
 alias cpwd="pwd | xclip -sel clip"
 alias vim="nvim"
+# alias nvim="nvim.appimage"
 export EDITOR="nvim"
 
-source $HOME/Applications/goto/goto.sh
-alias gt='goto'
+
+
+source /usr/share/bash-completion/bash_completion
+
+alias duu="ls -a | xargs -I{} du -sh {} | sort -h"
+
+# pnpm
+export PNPM_HOME="$XDG_DATA_HOME/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+
+export GPG_TTY=$(tty)
+export PATH="$PATH:$HOME/scripts"
+
+alias prmi='podman rmi $(podman images --filter "dangling=true" -q --no-trunc)'
+
+# export RUSTC_WRAPPER="${CARGO_HOME}/bin/sccache"
+
+# unset RUSTUP_HOME
+# unset CARGO_HOME 
+. "$XDG_DATA_HOME/cargo/env"
+# . "$HOME/.dotfiles/work/env.sh"
+
+
+eval "$(starship init bash)"
+
+~/.dotfiles/scripts/.local/bin/sshfs_info.sh

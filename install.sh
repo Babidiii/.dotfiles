@@ -78,6 +78,7 @@ required_package(){
   is_command_installed "git"
   is_command_installed "cmake"
   is_command_installed "make"
+  is_command_installed "stow  "
 
   is_command_installed "bash"
 
@@ -95,6 +96,8 @@ required_package(){
 
   printf "\n"; print_title 2 "Utils"
   is_command_installed "picom"
+  is_command_installed "zathura"
+  is_command_installed "nvim"
   is_command_installed "dunst"
 
   printf "\n"; print_title 2 ".dotfiles scripts"
