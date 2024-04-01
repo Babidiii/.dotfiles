@@ -54,7 +54,7 @@ vim.api.nvim_set_keymap('', '<Space>', '<Nop>', { noremap = true, silent = true 
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
-require("lazy").setup("plugins");
+require("lazy").setup({ {import = "plugins"},{import = "plugins.lsp"}});
 
 
 -- require("packer").startup(function()
@@ -190,12 +190,11 @@ require("impatient")
 
 -- custom configs
 
-require("autocompletion-config") -- lsp, snippets
 require("autogroups")
 require("keymaps")               -- keymaps
 
 -- require("telescope-config")
-require("colorizer").setup()
+-- require("colorizer").setup()
 
 vim.g.code_action_menu_show_details = false
 vim.g.code_action_menu_show_diff = false
