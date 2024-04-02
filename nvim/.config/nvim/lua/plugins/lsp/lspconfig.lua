@@ -70,8 +70,8 @@ return {
 
 	nmap('<leader>t', vim.lsp.buf.type_definition,'[T]ype definition')
 	nmap('<leader>rn', vim.lsp.buf.rename,'[R]e[N]ame')
-	nmap('<leader>ca', CodeActionMenu, '[C]ode [A]ction')
 	nmap('<leader>e', vim.diagnostic.open_float,'[E]rror Diagnostic')
+	-- nmap('<leader>ca', CodeActionMenu, '[C]ode [A]ction')
 	nmap('[d', vim.diagnostic.goto_prev,'Goto prev')
 	nmap(']d', vim.diagnostic.goto_next,'Goto next')
 	nmap('<leader>q', vim.diagnostic.setloclist,'')

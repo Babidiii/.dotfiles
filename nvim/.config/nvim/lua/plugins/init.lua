@@ -32,7 +32,7 @@ return {
   "mbbill/undotree",
   "unblevable/quick-scope",
   -- alt for vim-surround
-  "machakann/vim-sandwich",
+  -- "machakann/vim-sandwich",
   "junegunn/vim-easy-align",
   "norcalli/nvim-colorizer.lua",
   {"andymass/vim-matchup", event = "BufRead"}, -- extends vim's %,

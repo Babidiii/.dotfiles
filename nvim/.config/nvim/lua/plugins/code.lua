@@ -1,4 +1,10 @@
 return {
+  {
+    "smjonas/inc-rename.nvim",
+    config = function()
+      require("inc_rename").setup()
+    end,
+  },
   -- Create annotations with one keybind, and jump your cursor in the inserted annotation
   {
     "danymat/neogen",
@@ -93,9 +99,9 @@ return {
     },
   },
 
-  {
-    'doums/rg.nvim',
-    cmd = { 'Rg', 'Rgf', 'Rgp', 'Rgfp' },
-  }
+{
+  'doums/rg.nvim',
+  cmd = { 'Rg', 'Rgf', 'Rgp', 'Rgfp' },
+}
 
 }
