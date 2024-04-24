@@ -1,4 +1,5 @@
 return {
+  'rcarriga/nvim-notify',
   "lewis6991/impatient.nvim",
   -- Colorscheme
   {
@@ -36,7 +37,7 @@ return {
   "junegunn/vim-easy-align",
   "norcalli/nvim-colorizer.lua",
   {"andymass/vim-matchup", event = "BufRead"}, -- extends vim's %,
-  "vimwiki/vimwiki",
+  -- "vimwiki/vimwiki",
   -- take notes
   "vuciv/vim-bujo",
   -- silicon carbon.sh like feature
@@ -52,7 +53,7 @@ return {
   },
 
   -- Telescope
-  { 
+  {
     "nvim-telescope/telescope.nvim",
     dependencies = {"nvim-lua/popup.nvim", "nvim-lua/plenary.nvim"},
   },
@@ -63,8 +64,8 @@ return {
   -- highlight arguments
   { 'm-demare/hlargs.nvim', dependencies = { 'nvim-treesitter/nvim-treesitter' } },
   { "yioneko/nvim-yati", dependencies = "nvim-treesitter/nvim-treesitter" },
-  { "lewis6991/gitsigns.nvim", config = function() 
-      require("gitsigns").setup() 
+  { "lewis6991/gitsigns.nvim", config = function()
+      require("gitsigns").setup()
     end
   },
   -- Rust specific
@@ -72,13 +73,13 @@ return {
   {
     'babidiii/rust-cfg.nvim',
     dependencies = {
-      'nvim-telescope/telescope.nvim', 
-      'nvim-lua/plenary.nvim', 
-      'simrat39/rust-tools.nvim', 
+      'nvim-telescope/telescope.nvim',
+      'nvim-lua/plenary.nvim',
+      'simrat39/rust-tools.nvim',
     },
     opt = false,
-    config = function() 
-      require('telescope').load_extension('rust_cfg') 
+    config = function()
+      require('telescope').load_extension('rust_cfg')
     end
   },
 

@@ -98,8 +98,6 @@ map('n','<leader>fu','<cmd>Telescope git_files<cr>',opts)
 map('n','<leader>fj',"<cmd>Telescope<CR>", {noremap = true, silent = true})
 map('n','<leader>fp',"<cmd>lua require'telescope'.extensions.project.project{}<CR>", {noremap = true, silent = true})
 -- map('n','ca','<cmd>Telescope lsp_code_actions<CR>', { noremap = false, silent= true})
--- map('n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-map('n', '<leader>ca', '<cmd>CodeActionMenu<CR>', opts)
 
 -- Quicklist next/prev
 map('n','<C-n>','<cmd>cnext<CR>',opts)
@@ -137,3 +135,10 @@ vim.cmd([[
     cnoreabbrev Qa qa
     cnoreabbrev Qall qall
 ]])
+
+
+-- Harpoon navigates to next/previous mark
+map('n','<C-h>','<cmd>lua require("harpoon.ui").nav_file(1)<CR><cmd>', opts)
+map('n','<C-j>','<cmd>require("harpoon.ui").nav_file(2)<CR><cmd>', opts)
+map('n','<C-k>','<cmd>require("harpoon.ui").nav_file(3)<CR><cmd>', opts)
+map('n','<C-l>','<cmd>require("harpoon.ui").nav_file(4)<CR><cmd>', opts)

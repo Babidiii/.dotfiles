@@ -8,8 +8,14 @@ return {
   config = function()
     -- aliases
     -- vim.api.nvim.set_keymap({mode}, {keymap}, {mapped_to}, {options})
-    local map = vim.api.nvim_set_keymap 
+    local map = vim.api.nvim_set_keymap
     local opts = { noremap = true}
+
+    -- Harpoon navigates to next/previous mark
+    map('n','<C-h>','<cmd>lua require("harpoon.ui").nav_file(1)<CR><cmd>', opts)
+    map('n','<C-j>','<cmd>require("harpoon.ui").nav_file(2)<CR><cmd>', opts)
+    map('n','<C-k>','<cmd>require("harpoon.ui").nav_file(3)<CR><cmd>', opts)
+    map('n','<C-l>','<cmd>require("harpoon.ui").nav_file(4)<CR><cmd>', opts)
 
     -- Harpoon shortcut to commands
     map('n','<M-1>','<cmd>lua require("harpoon.term").sendCommand(1, 1)<CR> <bar> <cmd>lua require("harpoon.term").gotoTerminal(1)<CR>i<CR>', opts)
@@ -21,18 +27,13 @@ return {
     map('n','<M-7>','<cmd>lua require("harpoon.term").sendCommand(1, 8)<CR> <bar> <cmd>lua require("harpoon.term").gotoTerminal(1)<CR>i<CR>', opts)
 
     -- Harpoon toggle menu
-    map('n', '<leader>a', '<cmd>lua require("harpoon.mark").add_file()<CR>', opts) 
-    map('n','<C-e>','<cmd>lua require("harpoon.ui").toggle_quick_menu()<CR>', opts) 
+    map('n', '<leader>a', '<cmd>lua require("harpoon.mark").add_file()<CR>', opts)
+    map('n','<C-e>','<cmd>lua require("harpoon.ui").toggle_quick_menu()<CR>', opts)
     map('n','<C-q>','<cmd>lua require("harpoon.cmd-ui").toggle_quick_menu()<CR>', opts)
 
     -- Harpoon go to terminal one
     map('n','<leader>ht','<cmd>lua require("harpoon.term").gotoTerminal(1)<CR>i<CR>', opts)
 
-    -- Harpoon navigates to next/previous mark
-    map('n','<C-h>','<cmd>lua require("harpoon.ui").nav_file(1)<CR>',opts)
-    map('n','<C-j>','<cmd>lua require("harpoon.ui").nav_file(2)<CR>',opts)
-    map('n','<C-k>','<cmd>lua require("harpoon.ui").nav_file(3)<CR>',opts)
-    map('n','<C-l>','<cmd>lua require("harpoon.ui").nav_file(4)<CR>',opts)
 
   end
 }

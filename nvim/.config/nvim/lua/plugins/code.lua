@@ -1,5 +1,10 @@
 return {
   {
+    'mrcjkb/rustaceanvim',
+    version = '^4', -- Recommended
+    ft = { 'rust' },
+  },
+  {
     "smjonas/inc-rename.nvim",
     config = function()
       require("inc_rename").setup()

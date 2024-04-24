@@ -44,7 +44,8 @@ return {
       -- import cmp-nvim-lsp plugin
       local cmp_nvim_lsp = require("cmp_nvim_lsp")
 
-      local on_attach = function(_, bufnr)
+
+      local on_attach = function(client, bufnr)
 	local nmap = function(keys, func, desc)
 	  if desc then
 	    desc = 'LSP: ' .. desc
@@ -53,13 +54,28 @@ return {
 	  vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc, noremap = true, silent = true })
 	end
 
+	if client.name == "rust-analyzer" then
+          vim.keymap.set("n", "<leader>ca", function() vim.cmd.RustLsp("codeAction") end, { desc = "Code Action", buffer = bufnr })
+          vim.keymap.set("n", "<leader>dr", function() vim.cmd.RustLsp("debuggables") end, { desc = "Rust Debuggables", buffer = bufnr })
+          vim.keymap.set("n", "<leader>co", function() vim.cmd.RustLsp("openCargo") end, { desc = "Code Action", buffer = bufnr })
+
+          vim.keymap.set("n", "<leader>em", function() vim.cmd.RustLsp("expandMacro") end, { desc = "[E]xpand [M]acro", buffer = bufnr })
+          vim.keymap.set("n", "K", function() vim.cmd.RustLsp { 'hover', 'actions' } end, { desc = "Hover Action", buffer = bufnr })
+          vim.keymap.set("n", "<leader>ch", function() vim.cmd.RustLsp { 'view', 'hir' } end, { desc = "View HIR", buffer = bufnr })
+          vim.keymap.set("n", "<leader>cm", function() vim.cmd.RustLsp { 'view', 'mir' } end, { desc = "View HIR", buffer = bufnr })
+          vim.keymap.set("n", "<leader>cm", function() vim.cmd.RustLsp { 'view', 'mir' } end, { desc = "View HIR", buffer = bufnr })
+          vim.keymap.set("n", "J", function() vim.cmd.RustLsp('joinLines') end, { desc = "Rust Join Lines", buffer = bufnr })
+	else
+	  nmap('K', vim.lsp.buf.hover,'Hover Documentation')
+	  nmap('<leader>ca', '<cmd>CodeActionMenu<CR>', 'Default Code Action')
+	end
+
+
 	nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
 	nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
 	nmap('gr', vim.lsp.buf.references,'[G]oto [R]eferences')
 	nmap('gi', vim.lsp.buf.implementation,'[G]oto [I]mplementation')
 
-	-- :help K
-	nmap('K', vim.lsp.buf.hover,'Hover Documentation')
 	nmap('<C-k>', vim.lsp.buf.signature_help,'Signature Documentation')
 
 	nmap('<leader>wa', vim.lsp.buf.add_workspace_folder,'[W]orkspace [A]dd Folder')
@@ -78,11 +94,12 @@ return {
 	nmap('<leader>so', require('telescope.builtin').lsp_document_symbols, '')
 	nmap('<leader>vf',vim.lsp.buf.formatting,'')
 
-	vim.api.nvim_buf_create_user_command(bufnr, 'Format', 
-	  function(_) vim.lsp.buf.format() end, 
+	vim.api.nvim_buf_create_user_command(bufnr, 'Format',
+	  function(_) vim.lsp.buf.format() end,
 	  { desc = 'Format current buffer with LSP' })
-      end
 
+	require("notify")("My super important message")
+      end
 
       -- Change the Diagnostic symbols in the sign column 
       -- local signs = { Error = "🦀", Warn = "🦍 ", Hint = "🍌", Info = "🦧" }
@@ -130,8 +147,10 @@ return {
       -- Ensure the servers above are installed
       local mason_lspconfig = require('mason-lspconfig')
 
+      local deps= vim.tbl_keys(servers)
+
       mason_lspconfig.setup {
-	ensure_installed = vim.tbl_keys(servers),
+	ensure_installed = deps,
 	automaitc_installtion = true
       }
 
@@ -143,8 +162,68 @@ return {
 	    settings = servers[server_name],
 	    filetypes = (servers[server_name] or {}).filetypes,
 	  }
-	end
+	end,
+	["rust_analyzer"] = function () end
       }
+
+
+      vim.g.rustaceanvim = function()
+	local mason_registry = require('mason-registry')
+	local package = mason_registry.get_package('codelldb')
+	local install_dir = package:get_install_path()
+	local codelldb_path = install_dir .. '/' .. 'codelldb' -- this may need tweaking
+
+	local this_os = vim.uv.os_uname().sysname;
+
+	-- The path is different on Windows
+	if this_os:find "Windows" then
+	  codelldb_path = install_dir .. "adapter\\codelldb.exe"
+	end
+
+	  local cfg = require('rustaceanvim.config')
+
+	require("notify")("rustaceanvim initialized")
+	return {
+	  dap = {
+	    adapter = cfg.get_codelldb_adapter(codelldb_path),
+	  },
+	  server = {
+	    on_attach = function(c, b)
+	      require("notify")("before on_attach " .. c.name)
+	      on_attach(c, b)
+	      require("notify")("after on_attach")
+	    end,
+	    default_settings = {
+	      -- rust-analyzer language server configuration
+	      ["rust-analyzer"] = {
+		cargo = {
+		  allFeatures = true,
+		  loadOutDirsFromCheck = true,
+		  runBuildScripts = true,
+		},
+		-- Add clippy lints for Rust.
+		checkOnSave = {
+		  allFeatures = true,
+		  command = "clippy",
+		  extraArgs = { "--no-deps" },
+		},
+		procMacro = {
+		  enable = true,
+		  ignored = {
+		    ["async-trait"] = { "async_trait" },
+		    ["napi-derive"] = { "napi" },
+		    ["async-recursion"] = { "async_recursion" },
+		  },
+		},
+	      },
+	    },
+	  },
+	}
+
+
+
+      end
+
 
       local border = {
 	{"╭", "FloatBorder"},
@@ -205,9 +284,10 @@ return {
 	  ['<C-d>'] = cmp.mapping.scroll_docs(-4),
 	  ['<C-f>'] = cmp.mapping.scroll_docs(4),
 	  ['<C-Space>'] = cmp.mapping.complete {},
-	  -- ['<CR>'] = cmp.mapping.confirm {
-	  -- 	behavior = cmp.ConfirmBehavior.Replace,
-	  -- 	select = true,
+	  ['<CR>'] = cmp.mapping.confirm {
+	    behavior = cmp.ConfirmBehavior.Replace,
+	    select = true,
+	  },
 	  ['<C-CR>'] = cmp.mapping.confirm {
 	    behavior = cmp.ConfirmBehavior.Replace,
 	    select = true,
@@ -320,6 +400,12 @@ return {
 	}
       })
     end
+  },
+  {
+    "mrcjkb/rustaceanvim",
+    version = "^4", -- Recommended
+    ft = { "rust" },
   }
+
 }
 

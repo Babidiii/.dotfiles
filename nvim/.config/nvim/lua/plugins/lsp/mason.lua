@@ -7,6 +7,7 @@ return {
 
     -- enable mason and configure icons
     mason.setup({
+      ensure_installed= {"codelldb"},
       ui = {
 	icons = {
 	  package_installed = "✓",
