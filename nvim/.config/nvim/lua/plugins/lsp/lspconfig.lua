@@ -120,11 +120,33 @@ return {
 	  -- end,
 	  -- single_file_support = false,
 	},
+	taplo = {},
 	cssls = {},
 	tailwindcss = {
-	  -- root_dir = function(...)
-	  --   return require("lspconfig.util").root_pattern(".git")(...)
-	  -- end,
+	  init_options = {
+	    userLanguages = {
+	      elixir = 'phoenix-heex',
+	      eruby = 'erb',
+	      heex = 'phoenix-heex',
+	      svelte = 'html',
+	      rust = 'html',
+	    },
+	  },
+	  filetypes = {
+	    'css',
+	    'scss',
+	    'sass',
+	    'html',
+	    'heex',
+	    'elixir',
+	    'eruby',
+	    'javascript',
+	    'javascriptreact',
+	    'typescript',
+	    'typescriptreact',
+	    'svelte',
+	    'rust',
+	  },
 	},
 	rust_analyzer = {},
 	lua_ls = {
@@ -161,6 +183,8 @@ return {
 	    on_attach = on_attach,
 	    settings = servers[server_name],
 	    filetypes = (servers[server_name] or {}).filetypes,
+	    root_dir = (servers[server_name] or {}).root_dir,
+	    init_options = (servers[server_name] or {}).init_options
 	  }
 	end,
 	["rust_analyzer"] = function () end
@@ -185,7 +209,7 @@ return {
 	require("notify")("rustaceanvim initialized")
 	return {
 	  dap = {
-	    adapter = cfg.get_codelldb_adapter(codelldb_path),
+	    adapter = cfg.get_codelldb_adapter(codelldb_path, ""),
 	  },
 	  server = {
 	    on_attach = function(c, b)

@@ -30,7 +30,7 @@ vim.opt.undofile = true
 vim.g.undodir ="~/.cache/nvim/undodir"
 
 -----------------------------------------------------------------------------------
--- Packer
+-- Lazy
 -----------------------------------------------------------------------------------
 local ensure_lazy_packer = function()
   local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -48,7 +48,6 @@ local ensure_lazy_packer = function()
 end
 
 ensure_lazy_packer()
-
 -- [ Leader key ]
 vim.api.nvim_set_keymap('', '<Space>', '<Nop>', { noremap = true, silent = true })
 vim.g.mapleader = ' '
@@ -80,5 +79,5 @@ require("keymaps")               -- keymaps
 
 vim.g.code_action_menu_show_details = false
 vim.g.code_action_menu_show_diff = false
-vim.g.code_action_menu_show_action_kind = false	
+vim.g.code_action_menu_show_action_kind = false
 
