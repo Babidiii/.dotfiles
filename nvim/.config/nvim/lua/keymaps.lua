@@ -1,7 +1,7 @@
 --------------------------------------------- KEYMAPS
 -- aliases
 -- vim.api.nvim.set_keymap({mode}, {keymap}, {mapped_to}, {options})
-local map = vim.api.nvim_set_keymap 
+local map = vim.api.nvim_set_keymap
 
 local opts = { noremap = true}
 

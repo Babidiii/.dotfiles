@@ -36,6 +36,7 @@ return {
   -- "machakann/vim-sandwich",
   "junegunn/vim-easy-align",
   "norcalli/nvim-colorizer.lua",
+  "vimwiki/vimwiki",
   {"andymass/vim-matchup", event = "BufRead"}, -- extends vim's %,
   -- "vimwiki/vimwiki",
   -- take notes

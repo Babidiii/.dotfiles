@@ -1,0 +1,18 @@
+[[profile]]
+name = "dual_foo"
+exec = ["notify-send shikane \"Profile $SHIKANE_PROFILE_NAME has been applied\""]
+
+[[profile.output]]
+search  = "n/HDMI-[ABC]-[1-9]" # search for a matching name by regex
+enable = true
+exec = ["echo This is output $SHIKANE_OUTPUT_NAME"]
+mode = "1920x1080@60Hz"
+position = "0,0"
+
+[[profile.output]]
+search  = "n/DP-[1-9]" # search for a matching name by regex
+enable = true
+exec = ["echo This is output $SHIKANE_OUTPUT_NAME"]
+mode = "1920x1080@165Hz"
+position = "1920,0"
+

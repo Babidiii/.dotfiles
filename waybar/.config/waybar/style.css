@@ -1,0 +1,65 @@
+@define-color background #000000;
+@define-color foreground #a9b1d6;
+@define-color focused #ffb957;
+/* @define-color focused #bb9af7; */
+@define-color occupied #fce0c1;
+@define-color empty #565f89;
+@define-color urgent #f7768e;
+@define-color bluetooth #2ac3de;
+
+* {
+  font-family: IBMPlexMono;
+  font-size: 10pt;
+  min-height: 0px;
+}
+
+window#waybar {
+  color: @foreground;
+  background: @background;
+}
+
+#tags button {
+  padding: 0px 0px;
+  color: @empty;
+  border-radius: 0px;
+}
+
+#tags button:hover {
+  box-shadow: inherit;
+  text-shadow: inherit;
+  background: inherit;
+}
+
+#tags button.occupied {
+  color: @occupied;
+  font-weight: bold;
+}
+
+#tags button.focused {
+  color: @focused;
+}
+
+#tags button.urgent {
+  color: @urgent;
+}
+
+#custom-record {
+  color: @urgent;
+}
+
+#network {
+  color: blue;
+}
+
+#tray,
+#bluetooth,
+#battery,
+#network,
+#custom-mpd,
+#custom-weather,
+#custom-signal,
+#custom-inbox,
+#custom-record,
+#custom-clock {
+  padding: 0px 8px;
+}

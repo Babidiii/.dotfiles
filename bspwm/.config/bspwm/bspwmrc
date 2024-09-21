@@ -7,7 +7,7 @@ pgrep -x sxhkd > /dev/null || sxhkd &
 #   xrandr --output eDP1 --primary --mode 1920x1080 --pos 0x0 --rotate normal --output VIRTUAL1 --off --output HDMI-1-0 --mode 1920x1080 --pos 1920x0 --rotate normal
 # fi
 
-bspc monitor DP-0 -d 1 2 3 4 5 6 7 8 9 10
+bspc monitor DP-0 -d 0 1 2 3 4 5 6 7 8 9
 # bspc monitor HDMI-0 -d 1 2 3 4 5 6 7 8 9 10
 
 $HOME/.config/polybar/launch.sh

@@ -92,7 +92,7 @@ return {
 	nmap(']d', vim.diagnostic.goto_next,'Goto next')
 	nmap('<leader>q', vim.diagnostic.setloclist,'')
 	nmap('<leader>so', require('telescope.builtin').lsp_document_symbols, '')
-	nmap('<leader>vf',vim.lsp.buf.formatting,'')
+	nmap('<leader>vf',vim.lsp.buf.format,'')
 
 	vim.api.nvim_buf_create_user_command(bufnr, 'Format',
 	  function(_) vim.lsp.buf.format() end,
@@ -120,6 +120,7 @@ return {
 	  -- end,
 	  -- single_file_support = false,
 	},
+	clangd = {},
 	taplo = {},
 	cssls = {},
 	tailwindcss = {
