@@ -17,11 +17,11 @@ mod="Super"
 
 ######################################## AUTOSTART
 riverctl spawn "wired"
-riverctl spawn "shikane"
 riverctl spawn "swww-daemon"
-riverctl spawn "exec pipewire && exec wireplumber"
-riverctl spawn "swww img images/wallpapers/boy-chill.jpg"
+riverctl spawn "shikane"
+riverctl spawn "swww img images/wallpapers/wallhaven-735ope.png"
 riverctl spawn "$HOME/.config/waybar/launch.sh"
+riverctl spawn "exec pipewire && exec wireplumber"
 ######################################## Settings
 
 riverctl keyboard-layout -variant us -options caps:escape fr 
@@ -48,6 +48,8 @@ riverctl set-cursor-warp on-focus-change
 # Super+Shift+Return to start an instance of foot (https://codeberg.org/dnkl/foot)
 riverctl map normal $mod Return spawn 'st'
 riverctl map normal $mod P spawn 'dmenu_run'
+
+riverctl map normal $mod S spawn 'slurp | grim -g - - | wl-copy '
 
 # Super+Q to close the focused view
 riverctl map normal Super W close
