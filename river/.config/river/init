@@ -10,6 +10,14 @@
 
 # Note: the "Super" modifier is also known as Logo, GUI, Windows, Mod4, etc.
 
+assert_dependency () {
+    if ! command -v "$1" &> /dev/null; then
+        >&2 echo "[$(basename "$0")] ERROR: Missing dependency: $1"
+        return 1
+    fi
+    return 0
+}
+
 terminal="st"
 filemanager="ranger"
 browser="floorp"
@@ -19,9 +27,11 @@ mod="Super"
 riverctl spawn "wired"
 riverctl spawn "swww-daemon"
 riverctl spawn "shikane"
-riverctl spawn "swww img images/wallpapers/wallhaven-735ope.png"
+riverctl spawn "asound.sh"
+riverctl spawn "swww img ~/images/wallpapers/wallhaven-kx5z9m.jpg"
 riverctl spawn "$HOME/.config/waybar/launch.sh"
-riverctl spawn "exec pipewire && exec wireplumber"
+riverctl spawn "exec pipewire"
+# riverctl spawn "wireplumber"
 ######################################## Settings
 
 riverctl keyboard-layout -variant us -options caps:escape fr 
@@ -45,6 +55,8 @@ riverctl set-cursor-warp on-focus-change
 
 ######################################## Bind 
 
+# riverctl focus-follows-cursor disabled
+
 # Super+Shift+Return to start an instance of foot (https://codeberg.org/dnkl/foot)
 riverctl map normal $mod Return spawn 'st'
 riverctl map normal $mod P spawn 'dmenu_run'
@@ -58,10 +70,10 @@ riverctl map normal Super W close
 riverctl map normal $mod+Alt Q exit
 
 # Change the focused view with H,J,K,L
-riverctl map normal $mod H focus-view left
+riverctl map normal $mod H focus-view left || notify-send "ok"
 riverctl map normal $mod J focus-view down
 riverctl map normal $mod K focus-view up
-riverctl map normal $mod L focus-view right
+riverctl map normal $mod L focus-view right || focus-output right 
 
 # Swap the focused view with H,J,K,L
 riverctl map normal $mod+Shift H swap left

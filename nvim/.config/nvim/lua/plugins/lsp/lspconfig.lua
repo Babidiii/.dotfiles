@@ -121,15 +121,38 @@ return {
 
 
 			local servers = {
-				tsserver = {
-					-- root_dir = function(...)
-					--   return require("lspconfig.util").root_pattern(".git")(...)
-					-- end,
-					-- single_file_support = false,
-				},
+				-- tsserver = {
+				-- 	-- root_dir = function(...)
+				-- 	--   return require("lspconfig.util").root_pattern(".git")(...)
+				-- 	-- end,
+				-- 	-- single_file_support = false,
+				-- },
 				clangd = {},
 				taplo = {},
 				cssls = {},
+				pyright = {
+					capabilities = (function()
+						local capabilities = vim.lsp.protocol.make_client_capabilities()
+						capabilities.textDocument.publishDiagnostics.tagSupport.valueSet = { 2 }
+						return capabilities
+					end)(),
+					disableOrganizeImports = true, -- Using Ruff
+					python = {
+						analysis = {
+							ignore = { '*' }, -- Using Ruff
+						},
+					},
+				},
+				ruff = {},
+				-- pylyzer = {
+				-- 	single_file_support = true,
+				-- 	python = {
+				-- 		checkOnType = false,
+				-- 		diagnostics = true,
+				-- 		inlayHints = true,
+				-- 		smartCompletion = true
+				-- 	}
+				-- },
 				tailwindcss = {
 					init_options = {
 						userLanguages = {
@@ -157,6 +180,7 @@ return {
 					},
 				},
 				rust_analyzer = {},
+				asm_lsp = {},
 				lua_ls = {
 					Lua = {
 						workspace = { checkThirdParty = false },
@@ -419,6 +443,16 @@ return {
 					{ name = 'cmdline' }
 				})
 			})
+
+			-- vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+			-- 	pattern = { "*.asm", },
+			-- 	desc = "Auto-format ASM files after saving",
+			-- 	callback = function()
+			-- 		local fileName = vim.api.nvim_buf_get_name(0)
+			-- 		vim.cmd(":!asmfmt " .. fileName)
+			-- 	end,
+			-- 	group = autocmd_group,
+			-- })
 		end
 	},
 	{

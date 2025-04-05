@@ -72,8 +72,9 @@ return {
 		},
 		opt = false,
 		config = function()
-			require('telescope').load_extension('rust_cfg')
-		end
+			require('rust_cfg').setup({})
+		end,
+		dir = '/home/kintaro/projects/rust-cfg.nvim',
 	},
 
 }
