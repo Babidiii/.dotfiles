@@ -18,9 +18,9 @@ assert_dependency () {
     return 0
 }
 
-terminal="st"
-filemanager="ranger"
-browser="floorp"
+terminal="alacritty"
+filemanager="yazi"
+browser="zen.AppImage"
 mod="Super"
 
 ######################################## AUTOSTART
@@ -28,7 +28,7 @@ riverctl spawn "wired"
 riverctl spawn "swww-daemon"
 riverctl spawn "shikane"
 riverctl spawn "asound.sh"
-riverctl spawn "swww img ~/images/wallpapers/wallhaven-kx5z9m.jpg"
+riverctl spawn "swww img ~/images/wallpapers/artix.png"
 riverctl spawn "$HOME/.config/waybar/launch.sh"
 riverctl spawn "exec pipewire"
 # riverctl spawn "wireplumber"
@@ -58,7 +58,7 @@ riverctl set-cursor-warp on-focus-change
 # riverctl focus-follows-cursor disabled
 
 # Super+Shift+Return to start an instance of foot (https://codeberg.org/dnkl/foot)
-riverctl map normal $mod Return spawn 'st'
+riverctl map normal $mod Return spawn 'alacritty'
 riverctl map normal $mod P spawn 'dmenu_run'
 
 riverctl map normal $mod S spawn 'slurp | grim -g - - | wl-copy '

@@ -1,23 +1,93 @@
+-- ============================================================================
+-- Code-Specific Tools
+-- Refactoring, code generation, language-specific helpers
+-- ============================================================================
+
 return {
+	-- ========================================================================
+	-- Tree-sitter Just (Justfile support)
+	-- ========================================================================
 	"IndianBoy42/tree-sitter-just",
-	{
-		"norcalli/nvim-colorizer.lua",
-		config = function()
-			require("colorizer").setup()
-		end,
-	},
+	
+	-- ========================================================================
+	-- Rust: Rustaceanvim
+	-- ========================================================================
 	{
 		'mrcjkb/rustaceanvim',
-		version = '^4', -- Recommended
+		version = '^6',
+		lazy = false,
 		ft = { 'rust' },
 	},
+	
+	-- ========================================================================
+	-- Rust: Crates.nvim - Cargo.toml helper
+	-- ========================================================================
 	{
-		"smjonas/inc-rename.nvim",
+		'saecki/crates.nvim',
+		dependencies = { 'nvim-lua/plenary.nvim' },
+		lazy = false,
 		config = function()
-			require("inc_rename").setup()
+			local function show_documentation()
+				local filetype = vim.bo.filetype
+				if vim.tbl_contains({ 'vim', 'help' }, filetype) then
+					vim.cmd('h ' .. vim.fn.expand('<cword>'))
+				elseif vim.tbl_contains({ 'man' }, filetype) then
+					vim.cmd('Man ' .. vim.fn.expand('<cword>'))
+				elseif vim.fn.expand('%:t') == 'Cargo.toml' and require('crates').popup_available() then
+					require('crates').show_popup()
+				else
+					vim.lsp.buf.hover()
+				end
+			end
+			vim.keymap.set('n', 'K', show_documentation, { noremap = true, silent = true })
+			require('crates').setup()
 		end,
+		keys = {
+			{
+				"<leader>cf",
+				function() require("crates").show_features_popup() end,
+				desc = "Cargo Features popups"
+			},
+			{
+				"<leader>cd",
+				function() require("crates").open_documentation() end,
+				desc = "Cargo Open documentation"
+			}
+		}
 	},
-	-- Create annotations with one keybind, and jump your cursor in the inserted annotation
+	
+	-- ========================================================================
+	-- Helm Language Server
+	-- ========================================================================
+	{
+		"qvalentin/helm-ls.nvim",
+		ft = "helm",
+		opts = {},
+	},
+	
+	-- ========================================================================
+	-- Mini.nvim - Surround text objects
+	-- ========================================================================
+	{
+		'echasnovski/mini.nvim',
+		version = false,
+		config = function()
+			require("mini.surround").setup({})
+		end
+	},
+	
+	-- ========================================================================
+	-- Marks - Enhanced marks visualization
+	-- ========================================================================
+	{
+		"chentoast/marks.nvim",
+		event = "VeryLazy",
+		opts = {},
+	},
+	
+	-- ========================================================================
+	-- Neogen - Generate annotations/documentation
+	-- ========================================================================
 	{
 		"danymat/neogen",
 		keys = {
@@ -31,15 +101,19 @@ return {
 		},
 		opts = { snippet_engine = "luasnip" },
 	},
-
-	-- Incremental rename
+	
+	-- ========================================================================
+	-- Inc-Rename - Incremental LSP rename with preview
+	-- ========================================================================
 	{
 		"smjonas/inc-rename.nvim",
 		cmd = "IncRename",
 		config = true,
 	},
-
-	-- Refactoring tool
+	
+	-- ========================================================================
+	-- Refactoring - Extract functions, variables, etc.
+	-- ========================================================================
 	{
 		"ThePrimeagen/refactoring.nvim",
 		keys = {
@@ -56,64 +130,4 @@ return {
 		},
 		opts = {},
 	},
-
-	-- Go forward/backward with square brackets
-	{
-		"echasnovski/mini.bracketed",
-		event = "BufReadPost",
-		config = function()
-			local bracketed = require("mini.bracketed")
-			bracketed.setup({
-				file = { suffix = "" },
-				window = { suffix = "" },
-				quickfix = { suffix = "" },
-				yank = { suffix = "" },
-				treesitter = { suffix = "n" },
-			})
-		end,
-	},
-	-- Better increase/descrease
-	{
-		"monaqa/dial.nvim",
-		keys = {
-			{ "<C-a>",  "<Plug>(dial-increment)",  mode = { "n", "v" } },
-			{ "<C-x>",  "<Plug>(dial-decrement)",  mode = { "n", "v" } },
-			{ "g<C-a>", "g<Plug>(dial-increment)", mode = { "n", "v" }, remap = true },
-			{ "g<C-x>", "g<Plug>(dial-decrement)", mode = { "n", "v" }, remap = true },
-		},
-		config = function()
-			local augend = require("dial.augend")
-			require("dial.config").augends:register_group({
-				-- default augends used when no group name is specified
-				default = {
-					augend.integer.alias.decimal, -- nonnegative decimal number (0, 1, 2, 3, ...)
-					augend.integer.alias.hex, -- nonnegative hex number  (0x01, 0x1a1f, etc.)
-					augend.constant.alias.bool, -- boolean value (true <-> false)
-					augend.date.alias["%Y/%m/%d"], -- date (2022/02/18, etc.)
-					augend.date.alias["%m/%d/%Y"], -- date (02/19/2022)
-					augend.date.new({
-						pattern = "%m.%d.%Y",
-						default_kind = "day",
-						only_valid = true,
-						word = false,
-					}),
-					augend.misc.alias.markdown_header,
-				},
-			})
-		end,
-	},
-	{
-		"simrat39/symbols-outline.nvim",
-		keys = { { "<leader>cs", "<cmd>SymbolsOutline<cr>", desc = "Symbols Outline" } },
-		cmd = "SymbolsOutline",
-		opts = {
-			position = "right",
-		},
-	},
-
-	{
-		'doums/rg.nvim',
-		cmd = { 'Rg', 'Rgf', 'Rgp', 'Rgfp' },
-	}
-
 }

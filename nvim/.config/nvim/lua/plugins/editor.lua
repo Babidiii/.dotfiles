@@ -1,88 +1,80 @@
+-- ============================================================================
+-- Editor Enhancements
+-- Editing utilities, text manipulation, and editor behavior improvements
+-- ============================================================================
+
 return {
+	-- ========================================================================
+	-- Commentary - Toggle comments
+	-- ========================================================================
+	"tpope/vim-commentary",
+	
+	-- ========================================================================
+	-- Mini.bracketed - Navigate with square brackets
+	-- ========================================================================
 	{
-		"folke/flash.nvim",
-		event = "VeryLazy",
-		opts = {
-			search = {
-				multi_window = false,
-				wrap = false,
-				incremental = true,
-			},
-		},
-		keys = {
-			{ "s",     mode = { "n", },     function() require("flash").jump() end,              desc = "Flash" },
-			{ "S",     mode = { "n", },     function() require("flash").treesitter() end,        desc = "Flash Treesitter" },
-			{ "r",     mode = "o",          function() require("flash").remote() end,            desc = "Remote Flash" },
-			{ "R",     mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
-			{ "<c-s>", mode = { "c" },      function() require("flash").toggle() end,            desc = "Toggle Flash Search" },
-		},
-	},
-	{
-		"echasnovski/mini.hipatterns",
-		event = "BufReadPre",
-	},
-	{
-		"tamago324/lir.nvim",
-		-- keys = {
-		--   { "<leader>pv", "<cmd>lua require('lir.float').toggle()<cr>", desc="Lir"},
-		-- },
+		"echasnovski/mini.bracketed",
+		event = "BufReadPost",
 		config = function()
-			local actions           = require('lir.actions')
-			local mark_actions      = require('lir.mark.actions')
-			local clipboard_actions = require('lir.clipboard.actions')
-
-			require 'lir'.setup {
-				show_hidden_files = true,
-				devicons = {
-					enable = true,
+			local bracketed = require("mini.bracketed")
+			bracketed.setup({
+				file = { suffix = "" },
+				window = { suffix = "" },
+				quickfix = { suffix = "" },
+				yank = { suffix = "" },
+				treesitter = { suffix = "n" },
+			})
+		end,
+	},
+	
+	-- ========================================================================
+	-- Dial - Better increment/decrement (dates, booleans, hex, etc.)
+	-- ========================================================================
+	{
+		"monaqa/dial.nvim",
+		keys = {
+			{ "<C-a>",  "<Plug>(dial-increment)",  mode = { "n", "v" } },
+			{ "<C-x>",  "<Plug>(dial-decrement)",  mode = { "n", "v" } },
+			{ "g<C-a>", "g<Plug>(dial-increment)", mode = { "n", "v" }, remap = true },
+			{ "g<C-x>", "g<Plug>(dial-decrement)", mode = { "n", "v" }, remap = true },
+		},
+		config = function()
+			local augend = require("dial.augend")
+			require("dial.config").augends:register_group({
+				-- Default augends used when no group name is specified
+				default = {
+					augend.integer.alias.decimal,   -- nonnegative decimal number (0, 1, 2, 3, ...)
+					augend.integer.alias.hex,       -- nonnegative hex number (0x01, 0x1a1f, etc.)
+					augend.constant.alias.bool,     -- boolean value (true <-> false)
+					augend.date.alias["%Y/%m/%d"],  -- date (2022/02/18, etc.)
+					augend.date.alias["%m/%d/%Y"],  -- date (02/19/2022)
+					augend.date.new({
+						pattern = "%m.%d.%Y",
+						default_kind = "day",
+						only_valid = true,
+						word = false,
+					}),
+					augend.misc.alias.markdown_header,
 				},
-				mappings = {
-					['e'] = actions.edit,
-					['s'] = actions.split,
-					['v'] = actions.vsplit,
-					['t'] = actions.tabedit,
-					['h'] = actions.up,
-					['l'] = actions.edit,
-					['<CR>'] = actions.edit,
-					['q'] = actions.quit,
-					['<esc>'] = actions.quit,
-					['d'] = actions.mkdir,
-					['%'] = actions.newfile,
-					['R'] = actions.rename,
-					['@'] = actions.cd,
-					['Y'] = actions.yank_path,
-					['.'] = actions.toggle_show_hidden,
-					['D'] = actions.delete,
-					['J'] = function()
-						mark_actions.toggle_mark()
-						vim.cmd('normal! j')
-					end,
-					['C'] = clipboard_actions.copy,
-					['X'] = clipboard_actions.cut,
-					['P'] = clipboard_actions.paste,
-				},
-				float = {
-					winblend = 3,
-					curdir_window = {
-						enable = true,
-						highlight_dirname = true
-					},
-				},
-				hide_cursor = false,
-				on_init = function()
-					-- use visual mode
-					vim.api.nvim_buf_set_keymap(
-						0,
-						"x",
-						"J",
-						':<C-u>lua require"lir.mark.actions".toggle_mark("v")<CR>',
-						{ noremap = true, silent = true }
-					)
-
-					-- echo cwd
-					vim.api.nvim_echo({ { vim.fn.expand("%:p"), "Normal" } }, false, {})
-				end,
-			}
-		end
-	}
+			})
+		end,
+	},
+	
+	-- ========================================================================
+	-- Easy Align - Text alignment
+	-- ========================================================================
+	"junegunn/vim-easy-align",
+	
+	-- ========================================================================
+	-- Matchup - Enhanced % matching
+	-- ========================================================================
+	{
+		"andymass/vim-matchup",
+		event = "BufRead"
+	},
+	
+	-- ========================================================================
+	-- Undo Tree - Visualize undo history
+	-- ========================================================================
+	"mbbill/undotree",
 }

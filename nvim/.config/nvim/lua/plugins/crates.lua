@@ -1,7 +1,7 @@
 return {
 	'saecki/crates.nvim',
-	tag = 'v0.3.0',
 	dependencies = { 'nvim-lua/plenary.nvim' },
+	lazy = false,
 	config = function()
 		local function show_documentation()
 			local filetype = vim.bo.filetype
@@ -19,5 +19,17 @@ return {
 		vim.keymap.set('n', 'K', show_documentation, { noremap = true, silent = true })
 
 		require('crates').setup()
-	end
+	end,
+	keys = {
+		{
+			"<leader>cf",
+			function() require("crates").show_features_popup() end,
+			desc = "Cargo Features popups"
+		},
+		{
+			"<leader>cd",
+			function() require("crates").open_documentation() end,
+			desc = "Cargo Open documentation"
+		}
+	}
 }
