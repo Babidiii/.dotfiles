@@ -3,6 +3,7 @@
 -- Snippet expansion, sources, mappings, and formatting
 -- ============================================================================
 
+print("Loading completion module")
 local M = {}
 
 -- ============================================================================
@@ -16,6 +17,7 @@ function M.setup()
 	
 	-- Load snippets from snipmate format
 	require('luasnip.loaders.from_snipmate').lazy_load({ paths = snipmate })
+	-- require('luasnip.loaders.from_vscode').lazy_load()
 	
 	-- Border style for completion windows
 	local border = { '╭', '─', '╮', '│', '╯', '─', '╰', '│' }
@@ -155,6 +157,8 @@ function M.setup()
 						luasnip = "[LuaSnip]",
 						nvim_lua = "[Lua]",
 						latex_symbols = "[LaTeX]",
+						path = "[Path]",
+						calc = "[Calc]",
 					})[entry.source.name]
 					
 					-- Prevent duplicate entries from certain sources
@@ -181,6 +185,7 @@ function M.setup()
 	
 	-- Search mode (/)
 	cmp.setup.cmdline('/', {
+		mapping = cmp.mapping.preset.cmdline(),
 		sources = {
 			{ name = 'buffer' }
 		}
@@ -188,6 +193,7 @@ function M.setup()
 	
 	-- Command mode (:)
 	cmp.setup.cmdline(':', {
+		mapping = cmp.mapping.preset.cmdline(),
 		sources = cmp.config.sources({
 			{ name = 'path' }
 		}, {

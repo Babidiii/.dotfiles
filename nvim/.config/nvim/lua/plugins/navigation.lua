@@ -71,66 +71,64 @@ return {
 			picker = {
 				prompt = ' ',
 				sources = {
-					-- Explorer disabled - using lir instead
-					-- explorer = {
-					-- 	hidden = true,
-					-- 	ignored = true,
-					-- 	jump = {
-					-- 		jumplist = true,
-					-- 		tagstack = false,
-					-- 		reuse_win = false,
-					-- 		close = true,
-					-- 		match = false,
-					-- 	},
-					-- 	layout = {
-					-- 		reverse = false,
-					-- 		preset = "telescope"
-					-- 	},
-					-- 	win = {
-					-- 		list = {
-					-- 			keys = {
-					-- 				-- Navigation (like lir)
-					-- 				["<BS>"] = "explorer_up",  -- Go to parent directory
-					-- 				["h"] = "explorer_up",      -- Go up with h (vim-like)
-					-- 				["l"] = "confirm",          -- Enter dir/open file with l
-					-- 				["<CR>"] = "confirm",       -- Also with Enter
-					-- 				
-					-- 				-- File operations (like lir)
-					-- 				["%"] = "explorer_add",     -- Create new file
-					-- 				["d"] = "explorer_mkdir",   -- Create directory (if available)
-					-- 				["D"] = "explorer_del",     -- Delete file/directory
-					-- 				["r"] = "explorer_rename",  -- Rename
-					-- 				["R"] = "explorer_rename",  -- Also R for rename
-					-- 				
-					-- 				-- Additional useful bindings
-					-- 				["q"] = "close",            -- Quit
-					-- 				["<Esc>"] = "close",        -- Also Esc
-					-- 				["."] = "explorer_hidden",  -- Toggle hidden files
-					-- 				["?"] = "help",             -- Show help
-					-- 			}
-					-- 		}
-					-- 	},
-					-- },
+					explorer = {
+						hidden = true,
+						ignored = true,
+						jump = {
+							jumplist = true,
+							tagstack = false,
+							reuse_win = false,
+							close = true,
+							match = false,
+						},
+						layout = {
+							reverse = false,
+							preset = "telescope"
+						},
+						win = {
+							list = {
+								keys = {
+									["<BS>"] = "explorer_up",
+									["h"] = "explorer_up",
+									["l"] = "confirm",
+									["%"] = "explorer_add",
+									["D"] = "explorer_del",
+									["r"] = "explorer_rename",
+								}
+							}
+						},
+					},
 				},
 			},
 			explorer = {
-				enabled = false,  -- Disabled - using lir instead
-				-- config = {
-				-- 	restrict_to_cwd = false,
-				-- }
+				enabled = true,
+				config = {
+					restrict_to_cwd = false,
+				}
 			}
 		},
 		keys = {
-			-- Top Pickers (Snacks)
+			-- Top Pickers & Explorer
 			{ "<leader><space>", function() Snacks.picker.smart() end, desc = "Smart Find Files" },
 			{ "<leader>,", function() Snacks.picker.buffers() end, desc = "Buffers" },
 			{ "<leader>/", function() Snacks.picker.grep() end, desc = "Grep" },
 			{ "<leader>:", function() Snacks.picker.command_history() end, desc = "Command History" },
 			{ "<leader>n", function() Snacks.picker.notifications() end, desc = "Notification History" },
-			
-			-- Note: <leader>pv is now handled by lir (see lir config above)
-			-- { "<leader>pv", ... } -- Removed - using lir instead
-			-- { "<leader>PV", ... } -- Removed - using lir instead
+			{ "<leader>pv", function() 
+				local current_file = vim.fn.expand("%:p")
+				local current_dir
+				if current_file and current_file ~= "" then
+					if vim.fn.isdirectory(current_file) == 1 then
+						current_dir = current_file
+					else
+						current_dir = vim.fn.fnamemodify(current_file, ":h")
+					end
+				else
+					current_dir = vim.fn.getcwd()
+				end
+				require("snacks").explorer.open({ cwd = current_dir })
+				vim.api.nvim_echo({ { current_dir, "Normal" } }, false, {})
+			end, desc = "File Explorer" },
 			
 			-- Find
 			{ "<leader>fb", function() Snacks.picker.buffers() end, desc = "Buffers" },
@@ -209,77 +207,6 @@ return {
 	{
 		'doums/rg.nvim',
 		cmd = { 'Rg', 'Rgf', 'Rgp', 'Rgfp' },
-	},
-	
-	-- ========================================================================
-	-- Lir - File explorer with vim-like navigation
-	-- ========================================================================
-	{
-		"tamago324/lir.nvim",
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-			"nvim-tree/nvim-web-devicons",
-		},
-		keys = {
-			{ "<leader>pv", "<cmd>lua require('lir.float').toggle()<cr>", desc = "Lir File Explorer" },
-		},
-		config = function()
-			local actions = require('lir.actions')
-			local mark_actions = require('lir.mark.actions')
-			local clipboard_actions = require('lir.clipboard.actions')
-			
-			require('lir').setup({
-				show_hidden_files = true,
-				devicons = {
-					enable = true,
-				},
-				mappings = {
-					['e'] = actions.edit,
-					['s'] = actions.split,
-					['v'] = actions.vsplit,
-					['t'] = actions.tabedit,
-					['h'] = actions.up,
-					['l'] = actions.edit,
-					['<CR>'] = actions.edit,
-					['q'] = actions.quit,
-					['<esc>'] = actions.quit,
-					['d'] = actions.mkdir,
-					['%'] = actions.newfile,
-					['R'] = actions.rename,
-					['@'] = actions.cd,
-					['Y'] = actions.yank_path,
-					['.'] = actions.toggle_show_hidden,
-					['D'] = actions.delete,
-					['J'] = function()
-						mark_actions.toggle_mark()
-						vim.cmd('normal! j')
-					end,
-					['C'] = clipboard_actions.copy,
-					['X'] = clipboard_actions.cut,
-					['P'] = clipboard_actions.paste,
-				},
-				float = {
-					winblend = 3,
-					curdir_window = {
-						enable = true,
-						highlight_dirname = true
-					},
-				},
-				hide_cursor = false,
-				on_init = function()
-					-- Use visual mode for marking
-					vim.api.nvim_buf_set_keymap(
-						0,
-						"x",
-						"J",
-						':<C-u>lua require"lir.mark.actions".toggle_mark("v")<CR>',
-						{ noremap = true, silent = true }
-					)
-					-- Echo current directory
-					vim.api.nvim_echo({ { vim.fn.expand("%:p"), "Normal" } }, false, {})
-				end,
-			})
-		end
 	},
 	
 	-- ========================================================================

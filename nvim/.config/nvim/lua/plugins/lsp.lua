@@ -22,6 +22,8 @@ return {
 			require("mason").setup({
 				ensure_installed = {
 					"codelldb", -- Rust debugger (DAP adapter)
+					"tsserver",
+					"prettier"
 				},
 				ui = {
 					icons = {
@@ -33,7 +35,39 @@ return {
 			})
 		end,
 	},
+
+	{
+		"pmizio/typescript-tools.nvim",
+		dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+		opts = {},
+	},
 	
+
+	-- ========================================================================
+	-- Completion Setup (loaded on InsertEnter)
+	-- ========================================================================
+	{
+		"hrsh7th/nvim-cmp",
+		event = "InsertEnter",
+		dependencies = {
+			"hrsh7th/cmp-buffer",
+			"hrsh7th/cmp-path",
+			"hrsh7th/cmp-cmdline",
+			"hrsh7th/cmp-calc",
+			"hrsh7th/cmp-nvim-lua",
+			"hrsh7th/cmp-nvim-lsp",
+			"hrsh7th/cmp-emoji",
+			"L3MON4D3/LuaSnip",
+			"saadparwaiz1/cmp_luasnip",
+			"rafamadriz/friendly-snippets",
+			"onsails/lspkind.nvim",
+		},
+		config = function()
+			require('config.lsp.completion').setup()
+		end,
+	},
+
+
 	-- ========================================================================
 	-- LSP Configuration
 	-- ========================================================================
@@ -41,7 +75,7 @@ return {
 		"neovim/nvim-lspconfig",
 		event = { "BufReadPre", "BufNewFile" },
 		dependencies = {
-			"hrsh7th/cmp-nvim-lsp",
+			"hrsh7th/cmp-nvim-lsp", -- Must be loaded before LSP setup
 			{ "williamboman/mason.nvim", config = true },
 			"williamboman/mason-lspconfig.nvim",
 			{ "antosha417/nvim-lsp-file-operations", config = true },
@@ -57,32 +91,14 @@ return {
 				},
 			},
 			
-			-- Snippets
-			"L3MON4D3/LuaSnip",
-			"saadparwaiz1/cmp_luasnip",
-			"rafamadriz/friendly-snippets",
-			
-			-- Completion
-			"hrsh7th/cmp-nvim-lsp",
-			"onsails/lspkind.nvim",
-			
 			-- Code actions
 			{
 				"weilbith/nvim-code-action-menu",
 				cmd = "CodeActionMenu",
 			},
-			
-			-- nvim-cmp
-			{
-				"hrsh7th/nvim-cmp",
-				dependencies = { "hrsh7th/cmp-emoji" },
-			},
 		},
 		
 		config = function()
-			-- Setup completion first
-			completion.setup()
-			
 			-- Get capabilities from nvim-cmp
 			local capabilities = vim.lsp.protocol.make_client_capabilities()
 			capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
@@ -198,7 +214,7 @@ return {
 	{
 		"mfussenegger/nvim-lint",
 		event = "BufReadPost",
-		enabled = false, -- Set to true to enable linting
+		enabled = true, -- Set to true to enable linting
 		config = function()
 			-- Configure linters by filetype
 			require("lint").linters_by_ft = {

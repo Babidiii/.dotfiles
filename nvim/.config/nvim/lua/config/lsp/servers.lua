@@ -11,6 +11,15 @@ local M = {}
 
 function M.get_configs()
 	return {
+		-- ts_ls = {
+		-- 	filetypes={
+		-- 		'javascript',
+		-- 		'javascriptreact',
+		-- 		'typescript',
+		-- 		'typescriptreact',
+		-- 		'typescript.tsx',
+		-- 	}
+		-- },
 		-- ====================================================================
 		-- Systems Programming
 		-- ====================================================================
@@ -33,8 +42,9 @@ function M.get_configs()
 			},
 			filetypes = {
 				'css',
-				'scss',
-				'sass',
+				"postcss",
+				"sass",
+				"scss",
 				'html',
 				'heex',
 				'elixir',
@@ -43,6 +53,7 @@ function M.get_configs()
 				'javascriptreact',
 				'typescript',
 				'typescriptreact',
+				'typescript.tsx',
 				'svelte',
 			},
 		},
